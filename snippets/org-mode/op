@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name:op
+# key: <op
+# --
+#+begin_src python :results output
+
+#+end_src
