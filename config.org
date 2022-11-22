@@ -861,4 +861,3 @@ Not really part of the whole *ORG* section, but I often use it when I am working
       (select-window main-window))))
 #+end_src
 
-* Visual Configuration
