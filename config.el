@@ -1,15 +1,14 @@
 (setq user-full-name "Saihaj Law"
       user-mail-address "laws0817@gmail.com")
 
-(use-package autothemer
-  :ensure t)
-
-(setq doom-theme 'catppuccin-mocha)
-(setq +zen-text-scale 0.8 )
+;;(use-package :autothemer)
+;; (require 'nano-theme)
+(require 'ef-themes)
+ (setq doom-theme 'ef-cyprus)
+(setq +zen-text-scale 0.2)
 (setq display-line-numbers-type 'relative)
 ;;(set-frame-parameter (selected-frame) 'alpha '(95 95))
 ;;(add-to-list 'default-frame-alist '(alpha 95 95))
-(load-theme 'catppuccin-mocha t)
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (add-hook! '+doom-dashboard-functions :append
@@ -17,9 +16,14 @@
 (setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
 
 (setq-default line-spacing 0.24)
-
- (setq-default mode-line-format
-                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
+ ;; (use-package! nano-modeline
+ ;;   :hook (after-init . nano-modeline-mode)
+ ;;   :config
+ ;;   (setq nano-modeline-prefix 'status
+ ;;         nano-modeline-prefix-padding 1
+ ;;         nano-modeline-position 'bottom))
+  ;; (setq-default mode-line-format
+  ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
 
 (modify-all-frames-parameters
 '((right-divider-width . 10)
@@ -72,14 +76,6 @@
         (variable-pitch-mode 1))
     (variable-pitch-mode -1)))
 
-(define-minor-mode prot/display-line-number-mode
-  "Disable line numbers, except for programming modes."
-  :init-value nil
-  :global nil
-  (if prot/display-line-number-mode
-      (unless (derived-mode-p 'prog-mode)
-        (display-line-numbers-mode -1))
-    (display-line-numbers-mode 1)))
 
 
 (define-minor-mode prot/scroll-center-cursor-mode
@@ -117,6 +113,9 @@
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
 
+(setq doom-modeline-enable-word-count t)
+(setq doom-modeline-modal t)
+
 (after! org
   (setq org-directory "~/Org"                     ; let's put files here
         org-list-allow-alphabetical t             ; have a. A. a) A) list bullets
@@ -127,8 +126,8 @@
 
 ;; org-agenda-config
 (after! org-agenda
-  (setq org-agenda-files (list "~/Org/agenda.org"
-                               "~/Org/todo.org"))
+  (setq org-agenda-files (list "~/org/agenda.org"
+                               "~/org/todo.org"))
   (setq org-agenda-window-setup 'current-window
         org-agenda-restore-windows-after-quit t
         org-agenda-show-all-dates nil
@@ -186,7 +185,6 @@
   (setq org-roam-ui-open-on-start nil)
   (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))
 
-
 (use-package! websocket
   :after org-roam)
 
@@ -232,9 +230,7 @@
   :commands (doct))
 
 (defun org-capture-select-template-prettier (&optional keys)
-  "Select a capture template, in a prettier way than default
-Lisp programs can force the template by setting KEYS to a string."
-  (let ((org-capture-templates
+  "Select a capture template, in a prettier way than default Lisp programs can force the template by setting KEYS to a string." (let ((org-capture-templates
          (or (org-contextualize-keys
               (org-capture-upgrade-templates org-capture-templates)
               org-capture-templates-contexts)
@@ -544,9 +540,9 @@ Lisp programs can force the template by setting KEYS to a string."
             :subtitle      "𝙩"
             :author        "𝘼"
             :date          "𝘿"
-            :property      ""
+            :property      "⏻"
             :options       "⌥"
-            :startup       "⏻"
+            :startup       ""
             :macro         "𝓜"
             :html_head     "🅷"
             :html          "🅗"
@@ -564,7 +560,7 @@ Lisp programs can force the template by setting KEYS to a string."
             :results       "🠶"
             :begin_export  "⏩"
             :end_export    "⏪"
-            :properties    ""
+            :properties    "⏻"
             :end           "∎"
             :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
             :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
@@ -620,19 +616,18 @@ Lisp programs can force the template by setting KEYS to a string."
 )
 
 (custom-theme-set-faces
-   'user
-   `(org-level-4 ((t (:height 0.8))))
-   `(org-level-3 ((t (:height 0.95))))
-   `(org-level-2 ((t (:height 1.1))))
-   `(org-level-1 ((t (:height 1.35))))
-   `(org-document-title ((t (:height 1.6 :underline nil)))))
+     'user
+     `(org-level-4 ((t (:height 0.9))))
+     `(org-level-3 ((t (:height 1.15))))
+     `(org-level-2 ((t (:height 1.3))))
+     `(org-level-1 ((t (:height 1.45))))
+     `(org-document-title ((t (:height 1.7 :underline t)))))
 
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
- '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
-
- (add-hook 'org-mode-hook 'variable-pitch-mode)
+;;(set-face-attribute 'default nil :font "IBM 3270" :height 160 :weight normal)
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
+(set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
+(set-face-attribute 'variable-pitch nil :family "Ogg" :height 120)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (after! org
     (setq org-src-fontify-natively t
@@ -674,8 +669,7 @@ Lisp programs can force the template by setting KEYS to a string."
  ;; tufte-handout class for writing classy handouts and papers
 (with-eval-after-load 'ox-latex
 (add-to-list 'org-latex-classes
-'("tuftehandout"
-"\\documentclass{tufte-handout}
+'("tuftehandout" "\\documentclass{tufte-handout}
 \\usepackage{color}
 \\usepackage{amssymb}
 \\usepackage{amsmath}
@@ -692,10 +686,6 @@ Lisp programs can force the template by setting KEYS to a string."
 
 (with-eval-after-load 'org
   (plist-put org-format-latex-options :background 'default))
-
-(require 'openwith)
-(openwith-mode t)
-(setq openwith-associations '(("\\.pdf\\'" "zathura" (file))))
 
 (use-package! org-noter
   :after (:any org pdf-view)

@@ -1,14 +1,10 @@
-#+LATEX_CLASS:tuftebook
 #+title: Emacs Configuration
------
-
 * Introduction
 After reading some of the other amazing configurations written by people like [[https://tecosaur.github.io/emacs-config/config.html][Tecosaur]],[[https://github.com/shaunsingh/nyoom.emacs][ Shaun Singh]], and [[https://github.com/sunnyhasija/Academic-Doom-Emacs-Config][Sunny Hasja]]; I decided to upload my own (horrible) *Emacs Configuration*. As a High School student, with an avid interest in *Computer Science* and my class work. This is a *workflow* that I have designed to work well for myself ... but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit ... I forgot half of them!
 
 I will do my best to give thanks and credit to those who's code I +stole+ ... I mean used, but apologies in advance!
 
 Well ... Let's get started.
-
 * Initial Configuration
 As a *Vim* user for most of my life, the first main requirement I had for emacs was that there were *Vim Keybindings*, after some searching I stumbled upon /Doom Emacs/ and am currently using that as my daily Emacs driver. Even though I fiddled around with Vanilla Emacs (/to boast my superiority over those greenhorn Spacemacs users/), I in the end decided to return back to Doom because of it's quick runtimes, wonderfully configured EVIL keybindings and also many other things.
 
@@ -18,20 +14,19 @@ There is some initial configuration we have to do in Doom ... So let's look into
 (setq user-full-name "Saihaj Law"
       user-mail-address "laws0817@gmail.com")
 
-(use-package autothemer
-  :ensure t)
-
-(setq doom-theme 'catppuccin-mocha)
-(setq +zen-text-scale 0.8 )
+;;(use-package :autothemer)
+;; (require 'nano-theme)
+(require 'ef-themes)
+ (setq doom-theme 'ef-cyprus)
+(setq +zen-text-scale 0.2)
 (setq display-line-numbers-type 'relative)
 ;;(set-frame-parameter (selected-frame) 'alpha '(95 95))
 ;;(add-to-list 'default-frame-alist '(alpha 95 95))
-(load-theme 'catppuccin-mocha t)
 #+end_src
-Whoa ... Already we have some messy /lisp/. But just for a short summary ... I am initializing my personal information, my theme configuration (/catppuccin lovers stand up/) as well as zooming out a bit from *Zen's* overzealous centering. Additionally I am just specifiying my *line numbering* type and (/in the comment region/) is some code for when I feel like making my Emacs Transparent!
+Whoa ... Already we have some messy /lisp/. But just for a short summary ... I am initializing my personal information, my theme configuration (/catppuccin lovers stand up/) as well as zooming out a bit from *Zen's* overzealous centering. Additionally I am just specifiying my *line numbering* type and (/in the comment region/) is some code for when I feel like making my Emacs Transparent!\sidenote{The autothemer package is there for my catppuccin colour scheme}
 
 ** Dashboard
-I can't be posting my emacs setup on *r/unixporn* when I have a basic doom homepage .... That's why I added some stuff to remove most of the startup dashboard's info and instead put an image and the bare minimum amount of text
+I can't be posting my emacs setup on *r/unixporn* when I have a basic doom homepage .... That's why I added some stuff to remove most of the startup dashboard's info and instead put an image and the bare minimum amount of text\sidenote{I've edited the Vagabond picture to shrink down and fit my dashboard ... but any picture can likely work}
 #+begin_src emacs-lisp :tangle yes
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (add-hook! '+doom-dashboard-functions :append
@@ -40,13 +35,18 @@ I can't be posting my emacs setup on *r/unixporn* when I have a basic doom homep
 #+end_src
 
 ** Initial Visual Configuration
-Now we are getting into the interesting stuff. Some plugins to set up how our frames, modeline, and just general buffers will look/work
+Now we are getting into the interesting stuff. Some plugins to set up how our frames, modeline, and just general buffers will look/work\sidenote{just editing the default line spacing, the modeline size, the frame parameters, and the fringe colours}
 
 #+begin_src emacs-lisp :tangle yes
 (setq-default line-spacing 0.24)
-
- (setq-default mode-line-format
-                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
+ ;; (use-package! nano-modeline
+ ;;   :hook (after-init . nano-modeline-mode)
+ ;;   :config
+ ;;   (setq nano-modeline-prefix 'status
+ ;;         nano-modeline-prefix-padding 1
+ ;;         nano-modeline-position 'bottom))
+  ;; (setq-default mode-line-format
+  ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
 
 (modify-all-frames-parameters
 '((right-divider-width . 10)
@@ -85,7 +85,7 @@ Additionally I am using the *Theme-Magic* plugin to make my *Vterm* match the re
      (face-attribute 'default :foreground))))
 #+end_src
 ** Initial Functional Configuration
-Here we have some stuff that pertains to how my Emacs *works* when I'm on it.
+Here we have some stuff that pertains to how my Emacs *works* when I'm on it.\sidenote{I've just begun using xwidget ... but seems like a pretty cool tool!}
 #+begin_src emacs-lisp :tangle yes
 (setq scroll-margin 2
       auto-save-default t
@@ -96,7 +96,7 @@ Here we have some stuff that pertains to how my Emacs *works* when I'm on it.
 (global-subword-mode 1)
 #+end_src
 ** Minor Modes
-I haven't really delved deep into the world of *Minor Modes* in Emacs yet, but I am currently using some of /Prot's/ work in my configuration
+I haven't really delved deep into the world of *Minor Modes* in Emacs yet, but I am currently using some of /Prot's/ work in my configuration\sidenote{variable pitch mode to keep my fonts consistent, still trying to debug why my line numbers don't show though...}
 #+begin_src emacs-lisp :tangle yes
 (define-minor-mode prot/variable-pitch-mode
   "Toggle 'mixed-pitch-modei, except for programming modes"
@@ -107,14 +107,6 @@ I haven't really delved deep into the world of *Minor Modes* in Emacs yet, but I
         (variable-pitch-mode 1))
     (variable-pitch-mode -1)))
 
-(define-minor-mode prot/display-line-number-mode
-  "Disable line numbers, except for programming modes."
-  :init-value nil
-  :global nil
-  (if prot/display-line-number-mode
-      (unless (derived-mode-p 'prog-mode)
-        (display-line-numbers-mode -1))
-    (display-line-numbers-mode 1)))
 
 
 (define-minor-mode prot/scroll-center-cursor-mode
@@ -134,7 +126,7 @@ I haven't really delved deep into the world of *Minor Modes* in Emacs yet, but I
   )
 #+end_src
 ** Mu4e
-Not something I use very often ... but *Email in Emacs!*
+Not something I use very often ... but *Email in Emacs!*\sidenote{I'm using smtp to send my mail and using mu4e to view my emails}
 #+begin_src emacs-lisp :tangle yes
 ;; mu4e email
 (after! mu4e
@@ -155,9 +147,15 @@ Not something I use very often ... but *Email in Emacs!*
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
 #+end_src
+** Modeline
+#+begin_src emacs-lisp :tangle yes
+(setq doom-modeline-enable-word-count t)
+(setq doom-modeline-modal t)
+#+end_src
 * Org
 Here comes the heavy part of this Emacs configuration ... *ORG*. As a student, a person who programs, and just someone who in general likes writing ... *ORG* mode is indispensable. I have a lot of stuff coming up in here (but hopefully) I explain it enough that it is understandable to everyone including me.
 ** Org Initial Configuration
+Defaults\sidenote{Just establishing my directories and some other basic configuration}
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-directory "~/Org"                     ; let's put files here
@@ -173,8 +171,8 @@ Who doesn't want to organize their life, files, and everything else in one place
 #+begin_src emacs-lisp :tangle yes
 ;; org-agenda-config
 (after! org-agenda
-  (setq org-agenda-files (list "~/Org/agenda.org"
-                               "~/Org/todo.org"))
+  (setq org-agenda-files (list "~/org/agenda.org"
+                               "~/org/todo.org"))
   (setq org-agenda-window-setup 'current-window
         org-agenda-restore-windows-after-quit t
         org-agenda-show-all-dates nil
@@ -240,7 +238,6 @@ Org Roam is a wonderful plugin that I use all the time as it really helps me in 
   (setq org-roam-ui-open-on-start nil)
   (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))
 
-
 (use-package! websocket
   :after org-roam)
 
@@ -256,7 +253,7 @@ Org Roam is a wonderful plugin that I use all the time as it really helps me in 
  (setq +org-roam-open-buffer-on-find-file nil))
 #+end_src
 *** Org Roam Capture
-I love Org Capture. It is probably my favourite part of Emacs ... I also have it configured with *Emacs Everywhere* as you will see later in the documentation. I have it configured so that each of my classes have their own specific *startup* information which I will later use for other purposes
+I love Org Capture. It is probably my favourite part of Emacs ... I also have it configured with *Emacs Everywhere* as you will see later in the documentation. I have it configured so that each of my classes have their own specific *startup* information which I will later use for other purposes\sidenote{I've reecently gotten into tags in my files so i've added the filetags info as well}
 
 #+begin_src emacs-lisp :tangle yes
 (after! org-roam
@@ -283,7 +280,7 @@ I love Org Capture. It is probably my favourite part of Emacs ... I also have it
      :unnarrowed t))))
 #+end_src
 *** Org Capture Pt. 2
-I am running an org capture configuration that was created by the wonderful *Tecosaur* which uses the packages /doct/ to render the visuals instead. I have just recently begun tinkering with this so this will definitely be updated!
+I am running an org capture configuration that was created by the wonderful *Tecosaur* which uses the packages /doct/ to render the visuals instead. I have just recently begun tinkering with this so this will definitely be updated!\sidenote{I am still working on configuring this so it is somewhat bloated ... but it will be improved!}
 #+begin_src emacs-lisp :tangle yes
 
 (when (display-graphic-p)
@@ -294,9 +291,7 @@ I am running an org capture configuration that was created by the wonderful *Tec
   :commands (doct))
 
 (defun org-capture-select-template-prettier (&optional keys)
-  "Select a capture template, in a prettier way than default
-Lisp programs can force the template by setting KEYS to a string."
-  (let ((org-capture-templates
+  "Select a capture template, in a prettier way than default Lisp programs can force the template by setting KEYS to a string." (let ((org-capture-templates
          (or (org-contextualize-keys
               (org-capture-upgrade-templates org-capture-templates)
               org-capture-templates-contexts)
@@ -494,7 +489,7 @@ Since I am a MacOs user I have a configuration made (using the *Automation* tool
 #+end_src
 ** ORG Visual Configuration
 *** Org Modern
-One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugin that helps hide and clean up Org buffers, the configuration is copied straight from the documentation and works wonderfully for me.
+One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugin that helps hide and clean up Org buffers, the configuration is copied straight from the documentation and works wonderfully for me.\sidenote{This gives me those beautiful ToDo's and Done's}
 
 #+begin_src emacs-lisp :tangle yes
 ;; org modern
@@ -523,7 +518,7 @@ One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugi
 #+end_src
 
 *** SVG-Tag Mode
-This is a wonderful package created by the amazing *Rougier* (/check out his stuff if you like aesthetic Emacs/) which gives us beautifully rendered *Tags* inside of our org files
+This is a wonderful package created by the amazing *Rougier* (/check out his stuff if you like aesthetic Emacs/) which gives us beautifully rendered *Tags* inside of our org files\sidenote{it's made by Rougier ... it's going to look good}
 #+begin_src emacs-lisp :tangle yes
 (use-package svg-tag-mode
   :commands svg-tag-mode
@@ -624,9 +619,9 @@ I have some custom ligatures to simplify how all my /"Org Code"/ looks in my buf
             :subtitle      "𝙩"
             :author        "𝘼"
             :date          "𝘿"
-            :property      ""
+            :property      "⏻"
             :options       "⌥"
-            :startup       "⏻"
+            :startup       ""
             :macro         "𝓜"
             :html_head     "🅷"
             :html          "🅗"
@@ -644,7 +639,7 @@ I have some custom ligatures to simplify how all my /"Org Code"/ looks in my buf
             :results       "🠶"
             :begin_export  "⏩"
             :end_export    "⏪"
-            :properties    ""
+            :properties    "⏻"
             :end           "∎"
             :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
             :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
@@ -705,18 +700,17 @@ I have my fonts fairly simply configured ... I am using *ETBembo* (wonderful fon
 #+begin_src emacs-lisp :tangle yes
     (custom-theme-set-faces
      'user
-     `(org-level-4 ((t (:height 0.8))))
-     `(org-level-3 ((t (:height 0.95))))
-     `(org-level-2 ((t (:height 1.1))))
-     `(org-level-1 ((t (:height 1.35))))
-     `(org-document-title ((t (:height 1.6 :underline nil)))))
+     `(org-level-4 ((t (:height 0.9))))
+     `(org-level-3 ((t (:height 1.15))))
+     `(org-level-2 ((t (:height 1.3))))
+     `(org-level-1 ((t (:height 1.45))))
+     `(org-document-title ((t (:height 1.7 :underline t)))))
 
-  (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
-   '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
-
-   (add-hook 'org-mode-hook 'variable-pitch-mode)
+;;(set-face-attribute 'default nil :font "IBM 3270" :height 160 :weight normal)
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
+(set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
+(set-face-attribute 'variable-pitch nil :family "Ogg" :height 120)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
 *** Org Functional Visuals
@@ -745,7 +739,7 @@ Here I am adding the visuals which are pertinent to how my Org will look when op
 #+end_src
 
 ** LaTeX Configuration
-I always export the work I am handing in to teachers and printing off into $$\LaTeX$$ (/I know Lamport is happy with that typesetting/) and so I have some basic configuration going on in here
+I always export the work I am handing in to teachers and printing off into $$\LaTeX$$ (/I know Lamport is happy with that typesetting/) and so I have some basic configuration going on in here\sidenote{I personally use the tufte-latex classes as they look beautiful, but any classes can be added below}
 
 #+begin_src emacs-lisp :tangle yes
 (with-eval-after-load 'ox
@@ -769,8 +763,7 @@ I always export the work I am handing in to teachers and printing off into $$\La
  ;; tufte-handout class for writing classy handouts and papers
 (with-eval-after-load 'ox-latex
 (add-to-list 'org-latex-classes
-'("tuftehandout"
-"\\documentclass{tufte-handout}
+'("tuftehandout" "\\documentclass{tufte-handout}
 \\usepackage{color}
 \\usepackage{amssymb}
 \\usepackage{amsmath}
@@ -787,13 +780,7 @@ I always export the work I am handing in to teachers and printing off into $$\La
 
 (with-eval-after-load 'org
   (plist-put org-format-latex-options :background 'default))
-#+end_src
-** PDF-Configuration
-I love using *Zathura* (/vim bindings/) as my default PDF viewer instead of *PDF-Tools* so I am using the package /openwith/ to allow all my pdf files open up in *Zathura* by default instead
-#+begin_src emacs-lisp :tangle yes
-(require 'openwith)
-(openwith-mode t)
-(setq openwith-associations '(("\\.pdf\\'" "zathura" (file))))
+
 #+end_src
 *** Org-Noter
 I also often use Org-Noter as well to annotate my PDF's
@@ -813,7 +800,7 @@ I also often use Org-Noter as well to annotate my PDF's
 #+end_src
 
 ** Emacs-Calc
-Not really part of the whole *ORG* section, but I often use it when I am working with Org-Files .... So here it is.
+Not really part of the whole *ORG* section, but I often use it when I am working with Org-Files .... So here it is.\sidenote{Calc}
 #+begin_src emacs-lisp :tangle yes
 
 ;; CALC mode
@@ -860,4 +847,3 @@ Not really part of the whole *ORG* section, but I often use it when I am working
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
 #+end_src
-
