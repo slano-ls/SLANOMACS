@@ -1,6 +1,13 @@
 
          #+title: Emacs Configuration
 -----
+[[Screen Shot 2023-01-06 at 10.50.23 PM.png]]
+[[Screen Shot 2023-01-06 at 10.51.04 PM.png]]
+[[Screen Shot 2023-01-06 at 10.51.29 PM.png]]
+[[Screen Shot 2023-01-06 at 10.51.46 PM.png]]
+[[Screen Shot 2023-01-06 at 10.51.54 PM.png]]
+[[Screen Shot 2023-01-06 at 10.59.35 PM.png]]
+-----
 * Introduction
 After reading some of the other amazing configurations written by people like [[https://tecosaur.github.io/emacs-config/config.html][Tecosaur]],[[https://github.com/shaunsingh/nyoom.emacs][ Shaun Singh]], and [[https://github.com/sunnyhasija/Academic-Doom-Emacs-Config][Sunny Hasja]]; I decided to upload my own (horrible) *Emacs Configuration*. As a High School student, with an avid interest in *Computer Science* and my class work. This is a *workflow* that I have designed to work well for myself ... but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit ... I forgot half of them!
 I will do my best to give thanks and credit to those who's code I +stole+ ... I mean used, but apologies in advance!
