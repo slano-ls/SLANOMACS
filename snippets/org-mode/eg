@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: eg
+# key: eg
+# --
+
+\begin{eg}
+$0
+\end{eg}
