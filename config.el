@@ -1,14 +1,18 @@
+(add-to-list 'default-frame-alist '(undecorated . t))
+
 (setq user-full-name "Saihaj Law"
       user-mail-address "laws0817@gmail.com")
 
 ;;(use-package :autothemer)
-;; (require 'nano-theme)
-(require 'ef-themes)
- (setq doom-theme 'ef-cyprus)
-(setq +zen-text-scale 0.2)
-(setq display-line-numbers-type 'relative)
-;;(set-frame-parameter (selected-frame) 'alpha '(95 95))
-;;(add-to-list 'default-frame-alist '(alpha 95 95))
+;;(require 'nano-theme)
+;;(require 'ef-themes)
+(setq doom-theme 'doom-gruvbox)
+(setq +zen-text-scale 0.3)
+;;(setq display-line-numbers-type 'relative)
+
+;; (set-frame-parameter (selected-frame) 'alpha '(95 95))
+;; (add-to-list 'default-frame-alist '(alpha 95 95))
+ (require 'smooth-scroll)
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (add-hook! '+doom-dashboard-functions :append
@@ -16,15 +20,6 @@
 (setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
 
 (setq-default line-spacing 0.24)
- ;; (use-package! nano-modeline
- ;;   :hook (after-init . nano-modeline-mode)
- ;;   :config
- ;;   (setq nano-modeline-prefix 'status
- ;;         nano-modeline-prefix-padding 1
- ;;         nano-modeline-position 'bottom))
-  ;; (setq-default mode-line-format
-  ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
-
 (modify-all-frames-parameters
 '((right-divider-width . 10)
  (internal-border-width . 10)))
@@ -34,7 +29,17 @@
 (face-spec-reset-face face)
 (set-face-foreground face (face-attribute 'default :background)))
 (set-face-background 'fringe (face-attribute 'default :background))
-(good-scroll-mode 1)
+;;(good-scroll-mode 1)
+(unless (equal "Battery status not available"
+               (battery))
+  (display-battery-mode 1))
+(setq centaur-tabs-style "bar")
+(setq centaur-tabs-height 32)
+(setq centaur-tabs-set-icons t)
+(setq centaur-tabs-set-bar 'left)
+(setq centaur-tabs-set-modified-marker t)
+(after! centaur-tabs
+  (setq centaur-tabs-set-bar 'right))
 
 (use-package! theme-magic
   :commands theme-magic-from-emacs
@@ -59,6 +64,66 @@
      (doom-blend 'base8 'functions 0.1)
      (face-attribute 'default :foreground))))
 
+(require 'ivy-posframe)
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+(ivy-posframe-mode 1)
+(setq
+  redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
+
+;; (defun shaunsingh/apply-nano-theme (appearance)
+;;   "Load theme, taking current system APPEARANCE into consideration."
+;;   (mapc #'disable-theme custom-enabled-themes)
+;;   (pcase appearance
+;;     ('light (nano-light))
+;;     ('dark (nano-dark))))
+;; (use-package nano-theme
+;;   :hook (after-init . nano-light)
+;;   :config
+;;   ;; If emacs has been built with system appearance detection
+  ;; add a hook to change the theme to match the system
+  ;; (if (boundp 'ns-system-appearance-change-functions)
+  ;;     (add-hook 'ns-system-appearance-change-functions #'shaunsingh/apply-nano-theme))
+  ;; Now to add some missing faces
+;;   (custom-set-faces
+;;    `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
+;;    `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
+
+;;    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
+;;    `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
+;;    `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
+
+;;    `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
+;;    `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
+
+;;    `(vterm-color-red ((t (:foreground ,nano-light-critical))))
+;;    `(vterm-color-blue ((t (:foreground ,nano-light-salient))))
+;;    `(vterm-color-green ((t (:foreground ,nano-light-popout))))
+;;    `(vterm-color-yellow ((t (:foreground ,nano-light-popout))))
+;;    `(vterm-color-magenta ((t (:foreground ,nano-light-salient))))
+
+;;    `(scroll-bar ((t (:background ,nano-light-background))))
+;;    `(child-frame-border ((t (:foreground ,nano-light-faded))))
+
+;;    `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
+;;    `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
+;;    `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
+;;    (use-package! nano-modeline
+;;      :hook (after-init . nano-modeline-mode)
+;;      :config
+;;      (setq nano-modeline-prefix 'status
+;;            nano-modeline-prefix-padding 1
+;;            nano-modeline-position 'bottom))
+
+;; ;;(use-package! minions
+ ;; :hook (after-init . minions-mode))
+
+  ;;  (setq-default mode-line-format
+   ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
+
 (setq scroll-margin 2
       auto-save-default t
       display-line-numbers-type nil
@@ -66,6 +131,15 @@
       truncate-string-ellipsis "…"
       browse-url-browser-function 'xwidget-webkit-browse-url)
 (global-subword-mode 1)
+;; Time Tracking
+(use-package wakatime-mode
+  :diminish 'wakatime-mode
+  :init
+  (add-hook 'prog-mode-hook 'wakatime-mode)
+  :config (progn (setq wakatime-cli-path "/usr/local/bin/wakatime")
+                 (setq wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
+                 (setq wakatime-python-bin "/usr/local/bin/python")
+                 (global-wakatime-mode)))
 
 (define-minor-mode prot/variable-pitch-mode
   "Toggle 'mixed-pitch-modei, except for programming modes"
@@ -115,6 +189,20 @@
 
 (setq doom-modeline-enable-word-count t)
 (setq doom-modeline-modal t)
+
+;;(use-package subed
+ ;; :ensure t
+ ;; :config
+  ;; Disable automatic movement of point by default
+ ;; (add-hook 'subed-mode-hook 'subed-disable-sync-point-to-player)
+  ;; Remember cursor position between sessions
+ ;; (add-hook 'subed-mode-hook 'save-place-local-mode)
+  ;; Break lines automatically while typing
+ ;; (add-hook 'subed-mode-hook 'turn-on-auto-fill)
+   ;; Break lines at 40 characters
+  ;;(add-hook 'subed-mode-hook (lambda () (setq-local fill-column 40))))
+
+
 
 (after! org
   (setq org-directory "~/Org"                     ; let's put files here
@@ -344,83 +432,83 @@
 (setq doct-after-conversion-functions '(+doct-iconify-capture-templates))
 
 
-(after! org-capture
-  (require 'noflet)
-  (setq org-capture-templates
-        (doct `(("Todo" :keys "t"
-                 :icon ("home" :set "octicon" :color "cyan")
-                 :file "~/org/todo.org"
-                 :prepend t
-                 :headline "Inbox"
-                 :template ("* TODO %?"
-                            "%i %a"))
-                ("Agenda" :keys "a"
-                 :icon ("business" :set "material" :color "yellow")
-                 :file "agenda.org"
-                 :prepend t
-                 :headline "Inbox"
-                 :template ("* TODO %?"
-                            "SCHEDULED: %^{Schedule:}t"
-                            "DEADLINE: %^{Deadline:}t"
-                            "%i %a"))
-                ("Note" :keys "n"
-                 :icon ("sticky-note" :set "faicon" :color "yellow")
-                 :file "~/org/notes.org"
-                 :template ("* *?"
-                            "%i %a"))
-                ("Journal" :keys "j"
-                 :icon ("calendar" :set "faicon" :color "pink")
-                 :type plain
-                 :function (lambda ()
-                             (org-journal-new-entry t)
-                             (unless (eq org-journal-file-type 'daily)
-                               (org-narrow-to-subtree))
-                             (goto-char (point-max)))
-                 :template "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-                 :jump-to-captured t
-                 :immediate-finish t)
-                ("Project" :keys "p"
-                 :icon ("repo" :set "octicon" :color "silver")
-                 :prepend t
-                 :type entry
-                 :headline "Inbox"
-                 :template ("* %{keyword} %?"
-                            "%i"
-                            "%a")
-                 :file ""
-                 :custom (:keyword "")
-                 :children (("Task" :keys "t"
-                             :icon ("checklist" :set "octicon" :color "green")
-                             :keyword "TODO"
-                             :file +org-capture-project-todo-file)
-                            ("Note" :keys "n"
-                             :icon ("sticky-note" :set "faicon" :color "yellow")
-                             :keyword "%U"
-                             :file +org-capture-project-notes-file)))))))
+;;(after! org-capture
+ ;; (require 'noflet)
+  ;;(setq org-capture-templates
+   ;;     (doct `(("Todo" :keys "t"
+   ;;              :icon ("home" :set "octicon" :color "cyan")
+  ;;               :file "~/org/todo.org"
+ ;;                :prepend t
+      ;;           :headline "Inbox"
+     ;;           :template ("* TODO %?"
+    ;;                        "%i %a"))
+    ;;            ("Agenda" :keys "a"
+    ;;             :icon ("business" :set "material" :color "yellow")
+    ;;             :file "~/org/agenda.org"
+    ;;             :prepend t
+    ;;             :headline "Inbox"
+    ;;             :template ("* TODO %?"
+    ;;                        "SCHEDULED: %^{Schedule:}t"
+    ;;                        "DEADLINE: %^{Deadline:}t"
+   ;;                         "%i %a"))
+  ;;              ("Note" :keys "n"
+  ;;               :icon ("sticky-note" :set "faicon" :color "yellow")
+  ;;               :file "~/org/notes.org"
+  ;;               :template ("* *?"
+  ;;                          "%i %a"))
+  ;;              ("Journal" :keys "j"
+  ;;               :icon ("calendar" :set "faicon" :color "pink")
+  ;;               :type plain
+  ;;               :function (lambda ()
+  ;;                           (org-journal-new-entry t)
+  ;;                           (unless (eq org-journal-file-type 'daily)
+ ;;                              (org-narrow-to-subtree))
+ ;;                            (goto-char (point-max)))
+ ;;                :template "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+ ;;                :jump-to-captured t
+ ;;                :immediate-finish t)
+ ;;               ("Project" :keys "p"
+ ;;                :icon ("repo" :set "octicon" :color "silver")
+ ;;                :prepend t
+ ;;                :type entry
+ ;;                :headline "Inbox"
+ ;;                :template ("* %{keyword} %?"
+ ;;                           "%i"
+ ;;                           "%a")
+ ;;                :file ""
+ ;;                :custom (:keyword "")
+  ;;               :children (("Task" :keys "t"
+ ;;                             :icon ("checklist" :set "octicon" :color "green")
+;;                            :keyword "TODO"
+;;                             :file +org-capture-project-todo-file)
+;;                            ("Note" :keys "n"
+;;                             :icon ("sticky-note" :set "faicon" :color "yellow")
+;;                             :keyword "%U"
+;;                             :file +org-capture-project-notes-file)))))))
 
-(require 'noflet)
-(defun timu-func-make-capture-frame ()
-  "Create a new frame and run `org-capture'."
-  (interactive)
-  (make-frame '((name . "capture")
-                (top . 300)
-                (left . 700)
-                (width . 80)
-                (height . 25)))
-  (select-frame-by-name "capture")
-  (delete-other-windows)
-  (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
-          (org-capture)))
-(defadvice org-capture-finalize
-    (after delete-capture-frame activate)
-  "Advise capture-finalize to close the frame."
-  (if (equal "capture" (frame-parameter nil 'name))
-      (delete-frame)))
-(defadvice org-capture-destroy
-    (after delete-capture-frame activate)
-  "Advise capture-destroy to close the frame."
-  (if (equal "capture" (frame-parameter nil 'name))
-      (delete-frame)))
+;;(require 'noflet)
+;;(defun timu-func-make-capture-frame ()
+;;  "Create a new frame and run `org-capture'."
+;;  (interactive)
+;;  (make-frame '((name . "capture")
+;;                (top . 300)
+;;                (left . 700)
+;;                (width . 80)
+;;                (height . 25)))
+;;  (select-frame-by-name "capture")
+;;  (delete-other-windows)
+;;  (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+;;          (org-capture)))
+;;(defadvice org-capture-finalize
+;;    (after delete-capture-frame activate)
+;;  "Advise capture-finalize to close the frame."
+;;  (if (equal "capture" (frame-parameter nil 'name))
+;;      (delete-frame)))
+;;(defadvice org-capture-destroy
+;;    (after delete-capture-frame activate)
+;;  "Advise capture-destroy to close the frame."
+;;  (if (equal "capture" (frame-parameter nil 'name))
+;;      (delete-frame)))
 
 ;; org modern
 (setq ;; Edit settings
@@ -618,15 +706,15 @@
 (custom-theme-set-faces
      'user
      `(org-level-4 ((t (:height 0.9))))
-     `(org-level-3 ((t (:height 1.15))))
-     `(org-level-2 ((t (:height 1.3))))
-     `(org-level-1 ((t (:height 1.45))))
-     `(org-document-title ((t (:height 1.7 :underline t)))))
+     `(org-level-3 ((t (:height 1.15 :inherit nano-popout))))
+     `(org-level-2 ((t (:height 1.3 :inherit nano-popout))))
+     `(org-level-1 ((t (:height 1.45 :inherit nano-salient))))
+     `(org-document-title ((t (:height 1.7 :underline t :inherit nano-salient)))))
 
 ;;(set-face-attribute 'default nil :font "IBM 3270" :height 160 :weight normal)
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
 (set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
-(set-face-attribute 'variable-pitch nil :family "Ogg" :height 120)
+(set-face-attribute 'variable-pitch nil :family "Ogg" :height 160)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (after! org
@@ -647,9 +735,29 @@
       (setq right-margin-width 2)
       (set-window-buffer nil (current-buffer))))
 (setq header-line-format " ")
+(add-hook 'org-mode-hook
+          (lambda ()
+            (font-lock-add-keywords
+             nil
+             '(("^-\\{5,\\}"  0 '(:foreground "purple" :weight bold))))))
 
-(with-eval-after-load 'ox
-  (require 'ox-hugo))
+(require 'ink)
+
+(use-package! olivetti
+  :after org
+  ;:hook (olivetti-mode . double-header-line-mode)
+  :config
+    (setq olivetti-min-body-width 50
+          olivetti-body-width 130
+          olivetti-style 'fancy ; fantastic new layout
+          olivetti-margin-width 12)
+    (add-hook! 'olivetti-mode-hook (window-divider-mode -1))
+    (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
+    (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
+    )
+
+;; (with-eval-after-load 'ox
+;;   (require 'ox-hugo))
 
 ;; Tufte Latex Classes
 
@@ -680,10 +788,38 @@
 ("\\subsection{%s}" . "\\subsection*{%s}")
 ("\\paragraph{%s}" . "\\paragraph*{%s}")
 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+                     '("rbt-mathnotes-formula-sheet"
+                     " \\documentclass[]{rbt-mathnotes-formula-sheet}")))
 
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+                     '("rbt-mathnotes"
+                     " \\documentclass[]{rbt-mathnotes}")))
 
-;; Some Visuals
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+                     '("rbt-mathnotes-hw"
+                     " \\documentclass[]{rbt-mathnotes-hw}")))
 
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+'("lectures"
+"\\documentclass[english]{lectures}\n"
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+("\\paragraph{%s}" . "\\paragraph*{%s}")
+("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+'("math_lectures"
+"\\documentclass[]{report}\n"
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+("\\paragraph{%s}" . "\\paragraph*{%s}")
+("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 (with-eval-after-load 'org
   (plist-put org-format-latex-options :background 'default))
 
@@ -743,3 +879,6 @@
                (split-window-horizontally (- (/ (window-width) 2))))))
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
+
+(require 'gpt)
+(setq gpt-openai-key "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")

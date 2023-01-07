@@ -1,16 +1,47 @@
+% Created 2023-01-05 Thu 18:41
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Saihaj Law}
+\date{\today}
+\title{Emacs Configuration}
+\hypersetup{
+ pdfauthor={Saihaj Law},
+ pdftitle={Emacs Configuration},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.0.50 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
 
-         #+title: Emacs Configuration
------
-* Introduction
-After reading some of the other amazing configurations written by people like [[https://tecosaur.github.io/emacs-config/config.html][Tecosaur]],[[https://github.com/shaunsingh/nyoom.emacs][ Shaun Singh]], and [[https://github.com/sunnyhasija/Academic-Doom-Emacs-Config][Sunny Hasja]]; I decided to upload my own (horrible) *Emacs Configuration*. As a High School student, with an avid interest in *Computer Science* and my class work. This is a *workflow* that I have designed to work well for myself ... but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit ... I forgot half of them!
-I will do my best to give thanks and credit to those who's code I +stole+ ... I mean used, but apologies in advance!
-Well ... Let's get started.
-* Initial Configuration
-As a *Vim* user for most of my life, the first main requirement I had for emacs was that there were *Vim Keybindings*, after some searching I stumbled upon /Doom Emacs/ and am currently using that as my daily Emacs driver. Even though I fiddled around with Vanilla Emacs (/to boast my superiority over those greenhorn Spacemacs users/), I in the end decided to return back to Doom because of it's quick runtimes, wonderfully configured EVIL keybindings and also many other things.
+\maketitle
+\tableofcontents
 
-There is some initial configuration we have to do in Doom ... So let's look into it.
-** Basic Config
-#+begin_src emacs-lisp :tangle yes
+
+\noindent\rule{\textwidth}{0.5pt}
+\section{Introduction}
+\label{sec:org7f0544f}
+After reading some of the other amazing configurations written by people like \href{https://tecosaur.github.io/emacs-config/config.html}{Tecosaur},\href{https://github.com/shaunsingh/nyoom.emacs}{ Shaun Singh}, and \href{https://github.com/sunnyhasija/Academic-Doom-Emacs-Config}{Sunny Hasja}; I decided to upload my own (horrible) \textbf{Emacs Configuration}. As a High School student, with an avid interest in \textbf{Computer Science} and my class work. This is a \textbf{workflow} that I have designed to work well for myself \ldots{} but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit \ldots{} I forgot half of them!
+I will do my best to give thanks and credit to those who's code I \sout{stole} \ldots{} I mean used, but apologies in advance!
+Well \ldots{} Let's get started.
+\section{Initial Configuration}
+\label{sec:org2ba38e1}
+As a \textbf{Vim} user for most of my life, the first main requirement I had for emacs was that there were \textbf{Vim Keybindings}, after some searching I stumbled upon \emph{Doom Emacs} and am currently using that as my daily Emacs driver. Even though I fiddled around with Vanilla Emacs (\emph{to boast my superiority over those greenhorn Spacemacs users}), I in the end decided to return back to Doom because of it's quick runtimes, wonderfully configured EVIL keybindings and also many other things.
+
+There is some initial configuration we have to do in Doom \ldots{} So let's look into it.
+\subsection{Basic Config}
+\label{sec:org69986f3}
+\begin{verbatim}
 (add-to-list 'default-frame-alist '(undecorated . t))
 
 (setq user-full-name "Saihaj Law"
@@ -26,23 +57,25 @@ There is some initial configuration we have to do in Doom ... So let's look into
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 95))
 ;; (add-to-list 'default-frame-alist '(alpha 95 95))
  (require 'smooth-scroll)
-#+end_src
+\end{verbatim}
 
-Whoa ... Already we have some messy /lisp/. But just for a short summary ... I am initializing my personal information, my theme configuration (/catppuccin lovers stand up/) as well as zooming out a bit from *Zen's* overzealous centering. Additionally I am just specifiying my *line numbering* type and (/in the comment region/) is some code for when I feel like making my Emacs Transparent!\sidenote{The autothemer package is there for my catppuccin colour scheme}
+Whoa \ldots{} Already we have some messy \emph{lisp}. But just for a short summary \ldots{} I am initializing my personal information, my theme configuration (\emph{catppuccin lovers stand up}) as well as zooming out a bit from \textbf{Zen's} overzealous centering. Additionally I am just specifiying my \textbf{line numbering} type and (\emph{in the comment region}) is some code for when I feel like making my Emacs Transparent!\sidenote{The autothemer package is there for my catppuccin colour scheme}
 
-** Dashboard
-I can't be posting my emacs setup on *r/unixporn* when I have a basic doom homepage .... That's why I added some stuff to remove most of the startup dashboard's info and instead put an image and the bare minimum amount of text\sidenote{I've edited the Vagabond picture to shrink down and fit my dashboard ... but any picture can likely work}
-#+begin_src emacs-lisp :tangle yes
+\subsection{Dashboard}
+\label{sec:org80c1d8b}
+I can't be posting my emacs setup on \textbf{r/unixporn} when I have a basic doom homepage \ldots{}. That's why I added some stuff to remove most of the startup dashboard's info and instead put an image and the bare minimum amount of text\sidenote{I've edited the Vagabond picture to shrink down and fit my dashboard ... but any picture can likely work}
+\begin{verbatim}
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (add-hook! '+doom-dashboard-functions :append
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 (setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
-#+end_src
+\end{verbatim}
 
-** Initial Visual Configuration
+\subsection{Initial Visual Configuration}
+\label{sec:org38bba67}
 Now we are getting into the interesting stuff. Some plugins to set up how our frames, modeline, and just general buffers will look/work\sidenote{just editing the default line spacing, the modeline size, the frame parameters, and the fringe colours}
 
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 (setq-default line-spacing 0.24)
 (modify-all-frames-parameters
 '((right-divider-width . 10)
@@ -64,9 +97,9 @@ Now we are getting into the interesting stuff. Some plugins to set up how our fr
 (setq centaur-tabs-set-modified-marker t)
 (after! centaur-tabs
   (setq centaur-tabs-set-bar 'right))
-#+end_src
-Additionally I am using the *Theme-Magic* plugin to make my *Vterm* match the rest of my Emacs Configuration
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+Additionally I am using the \textbf{Theme-Magic} plugin to make my \textbf{Vterm} match the rest of my Emacs Configuration
+\begin{verbatim}
 (use-package! theme-magic
   :commands theme-magic-from-emacs
   :config
@@ -89,10 +122,10 @@ Additionally I am using the *Theme-Magic* plugin to make my *Vterm* match the re
      (doom-blend 'base8 'constants 0.1)
      (doom-blend 'base8 'functions 0.1)
      (face-attribute 'default :foreground))))
-#+end_src
+\end{verbatim}
 
 Some stuff for ivy posframe
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 (require 'ivy-posframe)
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
 (ivy-posframe-mode 1)
@@ -102,9 +135,10 @@ Some stuff for ivy posframe
   scroll-step 1
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
-#+end_src
-** Nano Stuff
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsection{Nano Stuff}
+\label{sec:org712be30}
+\begin{verbatim}
 ;; (defun shaunsingh/apply-nano-theme (appearance)
 ;;   "Load theme, taking current system APPEARANCE into consideration."
 ;;   (mapc #'disable-theme custom-enabled-themes)
@@ -154,10 +188,11 @@ Some stuff for ivy posframe
 
   ;;  (setq-default mode-line-format
    ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
-#+end_src
-** Initial Functional Configuration
-Here we have some stuff that pertains to how my Emacs *works* when I'm on it.\sidenote{I've just begun using xwidget ... but seems like a pretty cool tool!}
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsection{Initial Functional Configuration}
+\label{sec:org96a808e}
+Here we have some stuff that pertains to how my Emacs \textbf{works} when I'm on it.\sidenote{I've just begun using xwidget ... but seems like a pretty cool tool!}
+\begin{verbatim}
 (setq scroll-margin 2
       auto-save-default t
       display-line-numbers-type nil
@@ -175,10 +210,11 @@ Here we have some stuff that pertains to how my Emacs *works* when I'm on it.\si
                  (setq wakatime-python-bin "/usr/local/bin/python")
                  (global-wakatime-mode)))
 
-#+end_src
-** Minor Modes
-I haven't really delved deep into the world of *Minor Modes* in Emacs yet, but I am currently using some of /Prot's/ work in my configuration\sidenote{variable pitch mode to keep my fonts consistent, still trying to debug why my line numbers don't show though...}
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsection{Minor Modes}
+\label{sec:org7ca6483}
+I haven't really delved deep into the world of \textbf{Minor Modes} in Emacs yet, but I am currently using some of \emph{Prot's} work in my configuration\sidenote{variable pitch mode to keep my fonts consistent, still trying to debug why my line numbers don't show though...}
+\begin{verbatim}
 (define-minor-mode prot/variable-pitch-mode
   "Toggle 'mixed-pitch-modei, except for programming modes"
   :init-value nil
@@ -205,10 +241,11 @@ I haven't really delved deep into the world of *Minor Modes* in Emacs yet, but I
                      scroll-margin))
       (kill-local-variable `,local)))
   )
-#+end_src
-** Mu4e
-Not something I use very often ... but *Email in Emacs!*\sidenote{I'm using smtp to send my mail and using mu4e to view my emails}
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsection{Mu4e}
+\label{sec:org4f4f445}
+Not something I use very often \ldots{} but \textbf{Email in Emacs!}\sidenote{I'm using smtp to send my mail and using mu4e to view my emails}
+\begin{verbatim}
 ;; mu4e email
 (after! mu4e
   (setq mu4e-index-cleanup nil
@@ -227,35 +264,43 @@ Not something I use very often ... but *Email in Emacs!*\sidenote{I'm using smtp
         message-sendmail-f-is-evil t
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
-#+end_src
-** Modeline
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsection{Modeline}
+\label{sec:org16bbf91}
+\begin{verbatim}
 (setq doom-modeline-enable-word-count t)
 (setq doom-modeline-modal t)
-#+end_src
-** EmacsConf
-Just some stuff I'm using for volunteering with *EmacsConf*
-#+begin_src emacs-lisp :tangle yes
-;;(use-package subed
- ;; :ensure t
- ;; :config
+\end{verbatim}
+\subsection{EmacsConf}
+\label{sec:org19eea00}
+Just some stuff I'm using for volunteering with \textbf{EmacsConf}
+\begin{verbatim}
+(use-package subed
+  :ensure t
+  :config
   ;; Disable automatic movement of point by default
- ;; (add-hook 'subed-mode-hook 'subed-disable-sync-point-to-player)
+  (add-hook 'subed-mode-hook 'subed-disable-sync-point-to-player)
   ;; Remember cursor position between sessions
- ;; (add-hook 'subed-mode-hook 'save-place-local-mode)
+  (add-hook 'subed-mode-hook 'save-place-local-mode)
   ;; Break lines automatically while typing
- ;; (add-hook 'subed-mode-hook 'turn-on-auto-fill)
+  (add-hook 'subed-mode-hook 'turn-on-auto-fill)
    ;; Break lines at 40 characters
-  ;;(add-hook 'subed-mode-hook (lambda () (setq-local fill-column 40))))
-#+end_src
-** EAF
-#+begin_src emacs-lisp :tangle yes
-#+end_src
-* Org
-Here comes the heavy part of this Emacs configuration ... *ORG*. As a student, a person who programs, and just someone who in general likes writing ... *ORG* mode is indispensable. I have a lot of stuff coming up in here (but hopefully) I explain it enough that it is understandable to everyone including me.
-** Org Initial Configuration
+  (add-hook 'subed-mode-hook (lambda () (setq-local fill-column 40))))
+\end{verbatim}
+\subsection{EAF}
+\label{sec:org130c60a}
+\begin{verbatim}
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
+(require 'eaf)
+(require 'eaf-browser)
+\end{verbatim}
+\section{Org}
+\label{sec:org90946bb}
+Here comes the heavy part of this Emacs configuration \ldots{} \textbf{ORG}. As a student, a person who programs, and just someone who in general likes writing \ldots{} \textbf{ORG} mode is indispensable. I have a lot of stuff coming up in here (but hopefully) I explain it enough that it is understandable to everyone including me.
+\subsection{Org Initial Configuration}
+\label{sec:org6e03330}
 Defaults\sidenote{Just establishing my directories and some other basic configuration}
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 (after! org
   (setq org-directory "~/Org"                     ; let's put files here
         org-list-allow-alphabetical t             ; have a. A. a) A) list bullets
@@ -263,11 +308,13 @@ Defaults\sidenote{Just establishing my directories and some other basic configur
         org-fold-catch-invisible-edits 'smart          ; try not to accidently do weird stuff in invisible regions
         org-log-done 'time                        ; having the time a item is done sounds convenient
         org-roam-directory "~/Org/roam/"))        ; same thing, for roam
-#+end_src
-** Org Agenda
+\end{verbatim}
+\subsection{Org Agenda}
+\label{sec:org466e423}
 Who doesn't want to organize their life, files, and everything else in one place!
-*** Org Agenda Initial Configuration
-#+begin_src emacs-lisp :tangle yes
+\subsubsection{Org Agenda Initial Configuration}
+\label{sec:org3c7ae1b}
+\begin{verbatim}
 ;; org-agenda-config
 (after! org-agenda
   (setq org-agenda-files (list "~/org/agenda.org"
@@ -300,27 +347,30 @@ Who doesn't want to organize their life, files, and everything else in one place
   (remove-hook 'org-agenda-finalize-hook '+org-exclude-agenda-buffers-from-workspace-h)
   (remove-hook 'org-agenda-finalize-hook
                '+org-defer-mode-in-agenda-buffers-h))
-#+end_src
-*** Org Agenda Visual Configuration
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsubsection{Org Agenda Visual Configuration}
+\label{sec:org5428fe6}
+\begin{verbatim}
 (after! org
   (setq org-agenda-deadline-faces
         '((1.0 . error)
           (1.0 . org-warning)
           (0.5 . org-upcoming-deadline)
           (0.0 . org-upcoming-distant-deadline))))
-#+end_src
-** Org Roam
+\end{verbatim}
+\subsection{Org Roam}
+\label{sec:orgb875844}
 Org Roam is a wonderful plugin that I use all the time as it really helps me in my academic work, with organization and other wonderful features which I can't find in other Emacs Plugins.
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 
 (use-package! org-roam
   :after org)
 
 (setq org-roam-v2-ack t)
-#+end_src
-*** Org Roam Visual
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsubsection{Org Roam Visual}
+\label{sec:orgd49f668}
+\begin{verbatim}
 (use-package! org-roam
   :after org
   :config
@@ -350,11 +400,12 @@ Org Roam is a wonderful plugin that I use all the time as it really helps me in 
          org-roam-ui-open-on-start t))
  (after! org-roam
  (setq +org-roam-open-buffer-on-find-file nil))
-#+end_src
-*** Org Roam Capture
-I love Org Capture. It is probably my favourite part of Emacs ... I also have it configured with *Emacs Everywhere* as you will see later in the documentation. I have it configured so that each of my classes have their own specific *startup* information which I will later use for other purposes\sidenote{I've reecently gotten into tags in my files so i've added the filetags info as well}
+\end{verbatim}
+\subsubsection{Org Roam Capture}
+\label{sec:org0fe332e}
+I love Org Capture. It is probably my favourite part of Emacs \ldots{} I also have it configured with \textbf{Emacs Everywhere} as you will see later in the documentation. I have it configured so that each of my classes have their own specific \textbf{startup} information which I will later use for other purposes\sidenote{I've reecently gotten into tags in my files so i've added the filetags info as well}
 
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 (after! org-roam
     (setq org-roam-capture-templates
         `(("F" "French" plain "%?"
@@ -377,10 +428,11 @@ I love Org Capture. It is probably my favourite part of Emacs ... I also have it
      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
       "${title}\n#+filetags:Biology\n#+LATEX_CLASS:tufte-book\n\n ")
      :unnarrowed t))))
-#+end_src
-*** Org Capture Pt. 2
-I am running an org capture configuration that was created by the wonderful *Tecosaur* which uses the packages /doct/ to render the visuals instead. I have just recently begun tinkering with this so this will definitely be updated!\sidenote{I am still working on configuring this so it is somewhat bloated ... but it will be improved!}
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsubsection{Org Capture Pt. 2}
+\label{sec:org91f5297}
+I am running an org capture configuration that was created by the wonderful \textbf{Tecosaur} which uses the packages \emph{doct} to render the visuals instead. I have just recently begun tinkering with this so this will definitely be updated!\sidenote{I am still working on configuring this so it is somewhat bloated ... but it will be improved!}
+\begin{verbatim}
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -557,10 +609,11 @@ I am running an org capture configuration that was created by the wonderful *Tec
 ;;                             :icon ("sticky-note" :set "faicon" :color "yellow")
 ;;                             :keyword "%U"
 ;;                             :file +org-capture-project-notes-file)))))))
-#+end_src
-*** Org Capture Everywhere
-Since I am a MacOs user I have a configuration made (using the *Automation* tool) that allows me to call *Org-Capture* from anywhere! Yippie!
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsubsection{Org Capture Everywhere}
+\label{sec:org88189e9}
+Since I am a MacOs user I have a configuration made (using the \textbf{Automation} tool) that allows me to call \textbf{Org-Capture} from anywhere! Yippie!
+\begin{verbatim}
 ;;(require 'noflet)
 ;;(defun timu-func-make-capture-frame ()
 ;;  "Create a new frame and run `org-capture'."
@@ -585,12 +638,14 @@ Since I am a MacOs user I have a configuration made (using the *Automation* tool
 ;;  (if (equal "capture" (frame-parameter nil 'name))
 ;;      (delete-frame)))
 
-#+end_src
-** ORG Visual Configuration
-*** Org Modern
-One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugin that helps hide and clean up Org buffers, the configuration is copied straight from the documentation and works wonderfully for me.\sidenote{This gives me those beautiful ToDo's and Done's}
+\end{verbatim}
+\subsection{ORG Visual Configuration}
+\label{sec:orge29a505}
+\subsubsection{Org Modern}
+\label{sec:org96e45d8}
+One of the first \textbf{Org plugins} I have is \textbf{ORG MODERN} which is a wonderful plugin that helps hide and clean up Org buffers, the configuration is copied straight from the documentation and works wonderfully for me.\sidenote{This gives me those beautiful ToDo's and Done's}
 
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 ;; org modern
 (setq ;; Edit settings
  org-auto-align-tags nil
@@ -614,11 +669,12 @@ One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugi
  org-agenda-current-time-string
  "⭠ now ─────────────────────────────────────────────────")
 (global-org-modern-mode)
-#+end_src
+\end{verbatim}
 
-*** SVG-Tag Mode
-This is a wonderful package created by the amazing *Rougier* (/check out his stuff if you like aesthetic Emacs/) which gives us beautifully rendered *Tags* inside of our org files\sidenote{it's made by Rougier ... it's going to look good}
-#+begin_src emacs-lisp :tangle yes
+\subsubsection{SVG-Tag Mode}
+\label{sec:orgf74e78a}
+This is a wonderful package created by the amazing \textbf{Rougier} (\emph{check out his stuff if you like aesthetic Emacs}) which gives us beautifully rendered \textbf{Tags} inside of our org files\sidenote{it's made by Rougier ... it's going to look good}
+\begin{verbatim}
 
 (use-package svg-tag-mode
   :commands svg-tag-mode
@@ -699,11 +755,12 @@ This is a wonderful package created by the amazing *Rougier* (/check out his stu
             ((lambda (tag)
                (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
 
-#+end_src
+\end{verbatim}
 
-*** Ligatures
-I have some custom ligatures to simplify how all my /"Org Code"/ looks in my buffers
-#+begin_src emacs-lisp :tangle yes
+\subsubsection{Ligatures}
+\label{sec:org696ef8a}
+I have some custom ligatures to simplify how all my \emph{``Org Code''} looks in my buffers
+\begin{verbatim}
 (after! org
 (setq org-ellipsis " ▾ ")
   (appendq! +ligatures-extra-symbols
@@ -794,10 +851,11 @@ I have some custom ligatures to simplify how all my /"Org Code"/ looks in my buf
 (plist-put +ligatures-extra-symbols :name "⁍")
 )
 
-#+end_src
-*** Fonts
-I have my fonts fairly simply configured ... I am using *ETBembo* (wonderful font btw) throughout my configuration and have it change in size based on the heading levels.
-#+begin_src emacs-lisp :tangle yes
+\end{verbatim}
+\subsubsection{Fonts}
+\label{sec:org2ad246e}
+I have my fonts fairly simply configured \ldots{} I am using \textbf{ETBembo} (wonderful font btw) throughout my configuration and have it change in size based on the heading levels.
+\begin{verbatim}
     (custom-theme-set-faces
      'user
      `(org-level-4 ((t (:height 0.9))))
@@ -811,11 +869,12 @@ I have my fonts fairly simply configured ... I am using *ETBembo* (wonderful fon
 (set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
 (set-face-attribute 'variable-pitch nil :family "Ogg" :height 160)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
-#+end_src
+\end{verbatim}
 
-*** Org Functional Visuals
-Here I am adding the visuals which are pertinent to how my Org will look when opening it up ... and just the general settings for my ORG files
-#+begin_src emacs-lisp :tangle yes
+\subsubsection{Org Functional Visuals}
+\label{sec:org98fa2e6}
+Here I am adding the visuals which are pertinent to how my Org will look when opening it up \ldots{} and just the general settings for my ORG files
+\begin{verbatim}
 
 (after! org
     (setq org-src-fontify-natively t
@@ -842,10 +901,11 @@ Here I am adding the visuals which are pertinent to how my Org will look when op
              '(("^-\\{5,\\}"  0 '(:foreground "purple" :weight bold))))))
 
 (require 'ink)
-#+end_src
+\end{verbatim}
 
-*** Olivetti Mode
-#+begin_src emacs-lisp :tangle yes
+\subsubsection{Olivetti Mode}
+\label{sec:org34d477c}
+\begin{verbatim}
 (use-package! olivetti
   :after org
   ;:hook (olivetti-mode . double-header-line-mode)
@@ -858,14 +918,15 @@ Here I am adding the visuals which are pertinent to how my Org will look when op
     (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
     (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
     )
-#+end_src
+\end{verbatim}
 
-** LaTeX Configuration
-I always export the work I am handing in to teachers and printing off into $$\LaTeX$$ (/I know Lamport is happy with that typesetting/) and so I have some basic configuration going on in here\sidenote{I personally use the tufte-latex classes as they look beautiful, but any classes can be added below}
+\subsection{\LaTeX{} Configuration}
+\label{sec:orgd751d61}
+I always export the work I am handing in to teachers and printing off into $$\LaTeX$$ (\emph{I know Lamport is happy with that typesetting}) and so I have some basic configuration going on in here\sidenote{I personally use the tufte-latex classes as they look beautiful, but any classes can be added below}
 
-#+begin_src emacs-lisp  :tangle yes
-;; (with-eval-after-load 'ox
-;;   (require 'ox-hugo))
+\begin{verbatim}
+(with-eval-after-load 'ox
+  (require 'ox-hugo))
 
 ;; Tufte Latex Classes
 
@@ -931,11 +992,12 @@ I always export the work I am handing in to teachers and printing off into $$\La
 (with-eval-after-load 'org
   (plist-put org-format-latex-options :background 'default))
 
-#+end_src
+\end{verbatim}
 
-*** Org-Noter
+\subsubsection{Org-Noter}
+\label{sec:org79717a6}
 I also often use Org-Noter as well to annotate my PDF's
-#+begin_src emacs-lisp :tangle yes
+\begin{verbatim}
 (use-package! org-noter
   :after (:any org pdf-view)
   :config
@@ -948,11 +1010,12 @@ I also often use Org-Noter as well to annotate my PDF's
    org-noter-hide-other nil
    )
   )
-#+end_src
+\end{verbatim}
 
-** Emacs-Calc
-Not really part of the whole *ORG* section, but I often use it when I am working with Org-Files .... So here it is.\sidenote{Calc}
-#+begin_src emacs-lisp :tangle yes
+\subsection{Emacs-Calc}
+\label{sec:orgcb249d9}
+Not really part of the whole \textbf{ORG} section, but I often use it when I am working with Org-Files \ldots{}. So here it is.\sidenote{Calc}
+\begin{verbatim}
 
 ;; CALC mode
 (map! :map calc-mode-map
@@ -997,10 +1060,12 @@ Not really part of the whole *ORG* section, but I often use it when I am working
                (split-window-horizontally (- (/ (window-width) 2))))))
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
-#+end_src
+\end{verbatim}
 
-** NLP/GPT
-#+begin_src emacs-lisp :tangle yes
+\subsection{NLP/GPT}
+\label{sec:org4f86e21}
+\begin{verbatim}
 (require 'gpt)
 (setq gpt-openai-key "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")
-#+end_src
+\end{verbatim}
+\end{document}
