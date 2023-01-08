@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Latex Italic
+# key: i
+# uuid: i
+# condition: (not (save-restriction (widen) (texmathp)))
+# --
+\textit{`%`$1}$0
