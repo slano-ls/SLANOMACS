@@ -1,5 +1,5 @@
 
-         #+title: Emacs Configuration
+                            #+title: Emacs Configuration
 -----
 * Introduction
 After reading some of the other amazing configurations written by people like [[https://tecosaur.github.io/emacs-config/config.html][Tecosaur]],[[https://github.com/shaunsingh/nyoom.emacs][ Shaun Singh]], and [[https://github.com/sunnyhasija/Academic-Doom-Emacs-Config][Sunny Hasja]]; I decided to upload my own (horrible) *Emacs Configuration*. As a High School student, with an avid interest in *Computer Science* and my class work. This is a *workflow* that I have designed to work well for myself ... but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit ... I forgot half of them!
@@ -377,6 +377,7 @@ I love Org Capture. It is probably my favourite part of Emacs ... I also have it
      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
       "${title}\n#+filetags:Biology\n#+LATEX_CLASS:tufte-book\n\n ")
      :unnarrowed t))))
+
 #+end_src
 *** Org Capture Pt. 2
 I am running an org capture configuration that was created by the wonderful *Tecosaur* which uses the packages /doct/ to render the visuals instead. I have just recently begun tinkering with this so this will definitely be updated!\sidenote{I am still working on configuring this so it is somewhat bloated ... but it will be improved!}
