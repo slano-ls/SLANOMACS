@@ -1003,5 +1003,5 @@ Not really part of the whole *ORG* section, but I often use it when I am working
 ** NLP/GPT
 #+begin_src emacs-lisp :tangle yes
 (require 'gpt)
-(setq gpt-openai-key "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")
+(setq gpt-openai-key "*")
 #+end_src
