@@ -1,5 +1,5 @@
 
-                            #+title: Emacs Configuration
+#+title: Emacs Configuration
 -----
 * Introduction
 After reading some of the other amazing configurations written by people like [[https://tecosaur.github.io/emacs-config/config.html][Tecosaur]],[[https://github.com/shaunsingh/nyoom.emacs][ Shaun Singh]], and [[https://github.com/sunnyhasija/Academic-Doom-Emacs-Config][Sunny Hasja]]; I decided to upload my own (horrible) *Emacs Configuration*. As a High School student, with an avid interest in *Computer Science* and my class work. This is a *workflow* that I have designed to work well for myself ... but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit ... I forgot half of them!
@@ -11,16 +11,16 @@ As a *Vim* user for most of my life, the first main requirement I had for emacs 
 There is some initial configuration we have to do in Doom ... So let's look into it.
 ** Basic Config
 #+begin_src emacs-lisp :tangle yes
-(add-to-list 'default-frame-alist '(undecorated . t))
+;;(add-to-list 'default-frame-alist '(undecorated . t))
 
-(setq user-full-name "Saihaj Law"
+(setq user-full-name "Saihaj Law "
       user-mail-address "laws0817@gmail.com")
 
 ;;(use-package :autothemer)
 ;;(require 'nano-theme)
 ;;(require 'ef-themes)
-(setq doom-theme 'doom-gruvbox)
-(setq +zen-text-scale 0.3)
+(setq doom-theme 'doom-outrun-electric)
+;;(setq +zen-text-scale 0.3)
 ;;(setq display-line-numbers-type 'relative)
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 95))
@@ -166,14 +166,14 @@ Here we have some stuff that pertains to how my Emacs *works* when I'm on it.\si
       browse-url-browser-function 'xwidget-webkit-browse-url)
 (global-subword-mode 1)
 ;; Time Tracking
-(use-package wakatime-mode
-  :diminish 'wakatime-mode
-  :init
-  (add-hook 'prog-mode-hook 'wakatime-mode)
-  :config (progn (setq wakatime-cli-path "/usr/local/bin/wakatime")
-                 (setq wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
-                 (setq wakatime-python-bin "/usr/local/bin/python")
-                 (global-wakatime-mode)))
+;;(use-package wakatime-mode
+ ;; :diminish 'wakatime-mode
+ ;; :init
+  ;;(add-hook 'prog-mode-hook 'wakatime-mode)
+  ;;:config (progn (setq wakatime-cli-path "/usr/local/bin/wakatime")
+  ;;               (setq wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
+  ;;               (setq wakatime-python-bin "/usr/local/bin/python")
+  ;;               (global-wakatime-mode)))
 
 #+end_src
 ** Minor Modes
@@ -847,18 +847,18 @@ Here I am adding the visuals which are pertinent to how my Org will look when op
 
 *** Olivetti Mode
 #+begin_src emacs-lisp :tangle yes
-(use-package! olivetti
-  :after org
-  ;:hook (olivetti-mode . double-header-line-mode)
-  :config
-    (setq olivetti-min-body-width 50
-          olivetti-body-width 130
-          olivetti-style 'fancy ; fantastic new layout
-          olivetti-margin-width 12)
-    (add-hook! 'olivetti-mode-hook (window-divider-mode -1))
-    (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
-    (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
-    )
+;; (use-package! olivetti
+;;   :after org
+;;   ;:hook (olivetti-mode . double-header-line-mode)
+;;   :config
+;;     (setq olivetti-min-body-width 50
+;;           olivetti-body-width 130
+;;           olivetti-style 'fancy ; fantastic new layout
+;;           olivetti-margin-width 12)
+;;     (add-hook! 'olivetti-mode-hook (window-divider-mode -1))
+;;     (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
+;;     (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
+;;     )
 #+end_src
 
 ** LaTeX Configuration

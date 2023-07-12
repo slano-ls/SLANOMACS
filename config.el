@@ -1,13 +1,13 @@
-(add-to-list 'default-frame-alist '(undecorated . t))
+;;(add-to-list 'default-frame-alist '(undecorated . t))
 
-(setq user-full-name "Saihaj Law"
+(setq user-full-name "Saihaj Law "
       user-mail-address "laws0817@gmail.com")
 
 ;;(use-package :autothemer)
 ;;(require 'nano-theme)
 ;;(require 'ef-themes)
-(setq doom-theme 'doom-gruvbox)
-(setq +zen-text-scale 0.3)
+(setq doom-theme 'doom-outrun-electric)
+;;(setq +zen-text-scale 0.3)
 ;;(setq display-line-numbers-type 'relative)
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 95))
@@ -132,14 +132,14 @@
       browse-url-browser-function 'xwidget-webkit-browse-url)
 (global-subword-mode 1)
 ;; Time Tracking
-(use-package wakatime-mode
-  :diminish 'wakatime-mode
-  :init
-  (add-hook 'prog-mode-hook 'wakatime-mode)
-  :config (progn (setq wakatime-cli-path "/usr/local/bin/wakatime")
-                 (setq wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
-                 (setq wakatime-python-bin "/usr/local/bin/python")
-                 (global-wakatime-mode)))
+;;(use-package wakatime-mode
+ ;; :diminish 'wakatime-mode
+ ;; :init
+  ;;(add-hook 'prog-mode-hook 'wakatime-mode)
+  ;;:config (progn (setq wakatime-cli-path "/usr/local/bin/wakatime")
+  ;;               (setq wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
+  ;;               (setq wakatime-python-bin "/usr/local/bin/python")
+  ;;               (global-wakatime-mode)))
 
 (define-minor-mode prot/variable-pitch-mode
   "Toggle 'mixed-pitch-modei, except for programming modes"
@@ -743,18 +743,18 @@
 
 (require 'ink)
 
-(use-package! olivetti
-  :after org
-  ;:hook (olivetti-mode . double-header-line-mode)
-  :config
-    (setq olivetti-min-body-width 50
-          olivetti-body-width 130
-          olivetti-style 'fancy ; fantastic new layout
-          olivetti-margin-width 12)
-    (add-hook! 'olivetti-mode-hook (window-divider-mode -1))
-    (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
-    (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
-    )
+;; (use-package! olivetti
+;;   :after org
+;;   ;:hook (olivetti-mode . double-header-line-mode)
+;;   :config
+;;     (setq olivetti-min-body-width 50
+;;           olivetti-body-width 130
+;;           olivetti-style 'fancy ; fantastic new layout
+;;           olivetti-margin-width 12)
+;;     (add-hook! 'olivetti-mode-hook (window-divider-mode -1))
+;;     (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
+;;     (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
+;;     )
 
 ;; (with-eval-after-load 'ox
 ;;   (require 'ox-hugo))
@@ -881,4 +881,4 @@
       (select-window main-window))))
 
 (require 'gpt)
-(setq gpt-openai-key "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")
+(setq gpt-openai-key "*")

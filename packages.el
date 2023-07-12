@@ -24,4 +24,4 @@
 (package! smooth-scroll)
 (package! gpt)
 (package! straight :pin "3eca39d")
-(package! wakatime-mode)
+;;(package! wakatime-mode)
