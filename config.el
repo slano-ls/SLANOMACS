@@ -4,9 +4,9 @@
       user-mail-address "laws0817@gmail.com")
 
 ;;(use-package :autothemer)
-;;(require 'nano-theme)
+(require 'nano-theme)
 ;;(require 'ef-themes)
-(setq doom-theme 'doom-outrun-electric)
+(setq doom-theme 'nano-light)
 ;;(setq +zen-text-scale 0.3)
 ;;(setq display-line-numbers-type 'relative)
 
@@ -33,13 +33,13 @@
 (unless (equal "Battery status not available"
                (battery))
   (display-battery-mode 1))
-(setq centaur-tabs-style "bar")
-(setq centaur-tabs-height 32)
-(setq centaur-tabs-set-icons t)
-(setq centaur-tabs-set-bar 'left)
-(setq centaur-tabs-set-modified-marker t)
-(after! centaur-tabs
-  (setq centaur-tabs-set-bar 'right))
+;;(setq centaur-tabs-style "bar")
+;;(setq centaur-tabs-height 32)
+;;(setq centaur-tabs-set-icons t)
+;;(setq centaur-tabs-set-bar 'left)
+;;(setq centaur-tabs-set-modified-marker t)
+;;(after! centaur-tabs
+;;  (setq centaur-tabs-set-bar 'right))
 
 (use-package! theme-magic
   :commands theme-magic-from-emacs
@@ -74,55 +74,54 @@
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-;; (defun shaunsingh/apply-nano-theme (appearance)
-;;   "Load theme, taking current system APPEARANCE into consideration."
-;;   (mapc #'disable-theme custom-enabled-themes)
-;;   (pcase appearance
-;;     ('light (nano-light))
-;;     ('dark (nano-dark))))
-;; (use-package nano-theme
-;;   :hook (after-init . nano-light)
-;;   :config
-;;   ;; If emacs has been built with system appearance detection
-  ;; add a hook to change the theme to match the system
-  ;; (if (boundp 'ns-system-appearance-change-functions)
-  ;;     (add-hook 'ns-system-appearance-change-functions #'shaunsingh/apply-nano-theme))
+(defun shaunsingh/apply-nano-theme (appearance)
+   "Load theme, taking current system APPEARANCE into consideration."
+   (mapc #'disable-theme custom-enabled-themes)
+   (pcase appearance
+     ('light (nano-light))
+     ('dark (nano-dark))))
+ (use-package nano-theme
+   :hook (after-init . nano-light)
+   :config
+   ;; If emacs has been built with system appearance detection
+;; add a hook to change the theme to match the system
+   (if (boundp 'ns-system-appearance-change-functions)
+       (add-hook 'ns-system-appearance-change-functions #'shaunsingh/apply-nano-theme))
   ;; Now to add some missing faces
-;;   (custom-set-faces
-;;    `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
-;;    `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
+   (custom-set-faces
+    `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
+    `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
 
-;;    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
-;;    `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
-;;    `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
+    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
+    `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
+    `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
 
-;;    `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
-;;    `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
+    `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
+    `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
 
-;;    `(vterm-color-red ((t (:foreground ,nano-light-critical))))
-;;    `(vterm-color-blue ((t (:foreground ,nano-light-salient))))
-;;    `(vterm-color-green ((t (:foreground ,nano-light-popout))))
-;;    `(vterm-color-yellow ((t (:foreground ,nano-light-popout))))
-;;    `(vterm-color-magenta ((t (:foreground ,nano-light-salient))))
+    `(vterm-color-red ((t (:foreground ,nano-light-critical))))
+    `(vterm-color-blue ((t (:foreground ,nano-light-salient))))
+    `(vterm-color-green ((t (:foreground ,nano-light-popout))))
+    `(vterm-color-yellow ((t (:foreground ,nano-light-popout))))
+    `(vterm-color-magenta ((t (:foreground ,nano-light-salient))))
+    `(scroll-bar ((t (:background ,nano-light-background))))
+    `(child-frame-border ((t (:foreground ,nano-light-faded))))
 
-;;    `(scroll-bar ((t (:background ,nano-light-background))))
-;;    `(child-frame-border ((t (:foreground ,nano-light-faded))))
+    `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
+    `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
+    `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
+    ;;(use-package! nano-modeline
+     ;; :hook (after-init . nano-modeline-mode)
+      ;;:config
+      ;;(setq nano-modeline-prefix 'status
+       ;;     nano-modeline-prefix-padding 1
+        ;;    nano-modeline-position 'bottom))
 
-;;    `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
-;;    `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
-;;    `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
-;;    (use-package! nano-modeline
-;;      :hook (after-init . nano-modeline-mode)
-;;      :config
-;;      (setq nano-modeline-prefix 'status
-;;            nano-modeline-prefix-padding 1
-;;            nano-modeline-position 'bottom))
+(use-package! minions
+  :hook (after-init . minions-mode))
 
-;; ;;(use-package! minions
- ;; :hook (after-init . minions-mode))
-
-  ;;  (setq-default mode-line-format
-   ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
+    (setq-default mode-line-format
+                   (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
 
 (setq scroll-margin 2
       auto-save-default t
@@ -187,8 +186,8 @@
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
 
-(setq doom-modeline-enable-word-count t)
-(setq doom-modeline-modal t)
+;;(setq doom-modeline-enable-word-count t)
+;;(setq doom-modeline-modal t)
 
 ;;(use-package subed
  ;; :ensure t
@@ -201,8 +200,6 @@
  ;; (add-hook 'subed-mode-hook 'turn-on-auto-fill)
    ;; Break lines at 40 characters
   ;;(add-hook 'subed-mode-hook (lambda () (setq-local fill-column 40))))
-
-
 
 (after! org
   (setq org-directory "~/Org"                     ; let's put files here
@@ -743,19 +740,6 @@
 
 (require 'ink)
 
-;; (use-package! olivetti
-;;   :after org
-;;   ;:hook (olivetti-mode . double-header-line-mode)
-;;   :config
-;;     (setq olivetti-min-body-width 50
-;;           olivetti-body-width 130
-;;           olivetti-style 'fancy ; fantastic new layout
-;;           olivetti-margin-width 12)
-;;     (add-hook! 'olivetti-mode-hook (window-divider-mode -1))
-;;     (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
-;;     (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
-;;     )
-
 ;; (with-eval-after-load 'ox
 ;;   (require 'ox-hugo))
 
@@ -879,6 +863,3 @@
                (split-window-horizontally (- (/ (window-width) 2))))))
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
-
-(require 'gpt)
-(setq gpt-openai-key "*")

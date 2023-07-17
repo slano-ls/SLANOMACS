@@ -13,11 +13,11 @@
 ;; ;;(package! noflet)
 ;;(package! openwith)
 ;;(package! autothemer)
-;;(package! nano-theme)
+(package! nano-theme)
 ;;(package! nano-modeline)
 ;; (package! ef-themes)
 ;; (package! nano-theme)
-;; (package! minions)
+ (package! minions)
 (package! ivy-posframe)
 (package! ink
   :recipe (:type git :host github :repo "foxfriday/ink"))
