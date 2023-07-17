@@ -7,7 +7,7 @@
 (require 'nano-theme)
 ;;(require 'ef-themes)
 (setq doom-theme 'nano-light)
-;;(setq +zen-text-scale 0.3)
+(setq +zen-text-scale 0.9)
 ;;(setq display-line-numbers-type 'relative)
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 95))

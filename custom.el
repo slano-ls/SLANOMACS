@@ -3,12 +3,29 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(avy-lead-face ((t (:foreground "#FFAB91" :weight bold))))
+ '(avy-lead-face-0 ((t (:foreground "#673AB7" :weight bold))))
+ '(avy-lead-face-1 ((t (:foreground "#ECEFF1"))))
+ '(child-frame-border ((t (:foreground "#90A4AE"))))
+ '(flyspell-duplicate ((t (:underline (:color "#673AB7" :style line)))))
+ '(flyspell-incorrect ((t (:underline (:color "#673AB7" :style line)))))
+ '(git-gutter-fr:added ((t (:foreground "#FFAB91"))))
+ '(git-gutter-fr:modified ((t (:foreground "#673AB7"))))
+ '(git-gutter:modified ((t (:foreground "#673AB7"))))
+ '(lsp-ui-doc-background:modified ((t (:background "#FAFAFA"))))
+ '(lsp-ui-doc-url:added ((t (:background "#FAFAFA"))))
  '(org-document-title ((t (:height 1.7 :underline t :inherit nano-salient))))
- '(org-level-1 ((t (:height 1.45 :inherit nano-salient))))
- '(org-level-2 ((t (:height 1.3 :inherit nano-popout))))
- '(org-level-3 ((t (:height 1.15 :inherit nano-popout))))
+ '(org-level-1 ((t (:inherit nano-salient :extend t :height 1.45 :width extra-expanded))))
+ '(org-level-2 ((t (:inherit nano-popout :extend t :weight bold :height 1.3))))
+ '(org-level-3 ((t (:inherit nano-popout :extend t :weight semi-bold :height 1.15))))
  '(org-level-4 ((t (:height 0.9))))
- '(variable-pitch ((t (:family "Ogg" :height 180)))))
+ '(scroll-bar ((t (:background "#FFFFFF"))))
+ '(variable-pitch ((t (:family "Ogg" :height 180))))
+ '(vterm-color-blue ((t (:foreground "#673AB7"))))
+ '(vterm-color-green ((t (:foreground "#FFAB91"))))
+ '(vterm-color-magenta ((t (:foreground "#673AB7"))))
+ '(vterm-color-red ((t (:foreground "#FF6F00"))))
+ '(vterm-color-yellow ((t (:foreground "#FFAB91")))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -20,7 +37,7 @@
      ((:application tramp :machine "Saihajs-MacBook-Air.local")
       tramp-connection-local-darwin-ps-profile)
      ((:application tramp)
-      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)) t)
  '(connection-local-profile-alist
    '((tramp-connection-local-darwin-ps-profile
       (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
@@ -93,10 +110,11 @@
       (shell-command-switch . "-c"))
      (tramp-connection-local-default-system-profile
       (path-separator . ":")
-      (null-device . "/dev/null"))))
- '(global-wakatime-mode t)
+      (null-device . "/dev/null"))) t)
+ '(global-wakatime-mode t t)
  '(mouse-wheel-progressive-speed nil)
  '(package-selected-packages
    '(wakatime-mode olivetti subed ivy-posframe gpt org-center-headings))
  '(wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
  '(wakatime-cli-path "~/.wakatime/wakatime-cli"))
+(put 'customize-face 'disabled nil)
