@@ -14,15 +14,20 @@
 ;; (add-to-list 'default-frame-alist '(alpha 95 95))
  (require 'smooth-scroll)
 
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(add-hook! '+doom-dashboard-functions :append
-(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
-(setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
+;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+;;(add-hook! '+doom-dashboard-functions :append
+;;(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
+;;(setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 5)
+                        (registers . 5)))
 
 (setq-default line-spacing 0.24)
 (modify-all-frames-parameters
 '((right-divider-width . 10)
- (internal-border-width . 10)))
+ (internal-border-width . 0)))
 (dolist (face '(window-divider
                window-divider-first-pixel
                 window-divider-last-pixel))
@@ -74,27 +79,19 @@
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-(defun shaunsingh/apply-nano-theme (appearance)
-   "Load theme, taking current system APPEARANCE into consideration."
-   (mapc #'disable-theme custom-enabled-themes)
-   (pcase appearance
-     ('light (nano-light))
-     ('dark (nano-dark))))
- (use-package nano-theme
+(use-package nano-theme
    :hook (after-init . nano-light)
    :config
    ;; If emacs has been built with system appearance detection
-;; add a hook to change the theme to match the system
-   (if (boundp 'ns-system-appearance-change-functions)
-       (add-hook 'ns-system-appearance-change-functions #'shaunsingh/apply-nano-theme))
+  ;; add a hook to change the theme to match the system
   ;; Now to add some missing faces
    (custom-set-faces
     `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
     `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
 
-    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
-    `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
-    `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
+;;    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
+ ;;   `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
+  ;;  `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
 
     `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
     `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
@@ -110,17 +107,19 @@
     `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
     `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
     `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
-    ;;(use-package! nano-modeline
-     ;; :hook (after-init . nano-modeline-mode)
-      ;;:config
-      ;;(setq nano-modeline-prefix 'status
-       ;;     nano-modeline-prefix-padding 1
-        ;;    nano-modeline-position 'bottom))
+
+;;    (use-package! nano-modeline
+ ;;     :hook (after-init . nano-modeline-mode)
+  ;;    :config
+   ;;   (setq nano-modeline-prefix 'status
+    ;;        nano-modeline-prefix-padding 1
+     ;;       nano-modeline-position 'bottom))
+;;(require 'nano-modeline)
 
 (use-package! minions
   :hook (after-init . minions-mode))
 
-    (setq-default mode-line-format
+     (setq-default mode-line-format
                    (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
 
 (setq scroll-margin 2
@@ -211,9 +210,11 @@
 
 ;; org-agenda-config
 (after! org-agenda
-  (setq org-agenda-files (list "~/org/agenda.org"
-                               "~/org/todo.org"))
-  (setq org-agenda-window-setup 'current-window
+ ;;  (setq org-agenda-files (list "~/org/agenda.org"
+;;                                "~/org/todo.org"))
+;; (setq org-agenda-files "~/org/todo.org")
+ (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
+ (setq org-agenda-window-setup 'current-window
         org-agenda-restore-windows-after-quit t
         org-agenda-show-all-dates nil
         org-agenda-time-in-grid t
@@ -507,7 +508,49 @@
 ;;  (if (equal "capture" (frame-parameter nil 'name))
 ;;      (delete-frame)))
 
+(defun isamert/toggle-side-bullet-org-buffer ()
+  "Toggle `bullet.org` in a side buffer for quick note taking.  The buffer is opened in side window so it can't be accidentaly removed."
+  (interactive)
+  (isamert/toggle-side-buffer-with-file "~/org/todo.org"))
+
+(defun isamert/buffer-visible-p (buffer)
+ "Check if given BUFFER is visible or not.  BUFFER is a string representing the buffer name."
+  (or (eq buffer (window-buffer (selected-window))) (get-buffer-window buffer)))
+
+(defun isamert/display-buffer-in-side-window (buffer)
+  "Just like `display-buffer-in-side-window' but only takes a BUFFER and rest of the parameters are for my taste."
+  (select-window
+   (display-buffer-in-side-window
+    buffer
+    (list (cons 'side 'right)
+          (cons 'slot 0)
+          (cons 'window-width 64)
+          (cons 'window-parameters (list (cons 'no-delete-other-windows t)
+                                         (cons 'no-other-window nil)))))))
+
+(defun isamert/remove-window-with-buffer (the-buffer-name)
+  "Remove window containing given THE-BUFFER-NAME."
+  (mapc (lambda (window)
+          (when (string-equal (buffer-name (window-buffer window)) the-buffer-name)
+            (delete-window window)))
+        (window-list (selected-frame))))
+
+(defun isamert/toggle-side-buffer-with-file (file-path)
+  "Toggle FILE-PATH in a side buffer. The buffer is opened in side window so it can't be accidentaly removed."
+  (interactive)
+  (let ((fname (file-name-nondirectory file-path)))
+  (if (isamert/buffer-visible-p fname)
+      (isamert/remove-window-with-buffer fname)
+    (isamert/display-buffer-in-side-window
+     (save-window-excursion
+       (find-file file-path)
+       (current-buffer))))))
+
 ;; org modern
+;; Center the title and spread underline
+(setq org-document-title (list (cons 'center t) (cons 'overline " ")
+                        (cons 'underline nil) (cons 'box nil)))
+
 (setq ;; Edit settings
  org-auto-align-tags nil
  org-tags-column 0
@@ -711,7 +754,7 @@
 ;;(set-face-attribute 'default nil :font "IBM 3270" :height 160 :weight normal)
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
 (set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
-(set-face-attribute 'variable-pitch nil :family "Ogg" :height 160)
+(set-face-attribute 'variable-pitch nil :family "Avenir" :height 160)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (after! org
@@ -863,3 +906,7 @@
                (split-window-horizontally (- (/ (window-width) 2))))))
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
+
+(require 'todoist)
+(setq todoist-token "2c719222699ff38063ceff191357d712fa24b7cb")
+(setq todoist-backing-buffer "~/org/todo.org")

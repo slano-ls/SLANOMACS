@@ -1,6 +1,5 @@
-
 #+title: Emacs Configuration
------
+
 * Introduction
 After reading some of the other amazing configurations written by people like [[https://tecosaur.github.io/emacs-config/config.html][Tecosaur]],[[https://github.com/shaunsingh/nyoom.emacs][ Shaun Singh]], and [[https://github.com/sunnyhasija/Academic-Doom-Emacs-Config][Sunny Hasja]]; I decided to upload my own (horrible) *Emacs Configuration*. As a High School student, with an avid interest in *Computer Science* and my class work. This is a *workflow* that I have designed to work well for myself ... but may not be the best for your workflow! There are lots of bits an pieces cobbled together from many different sources, but I have to admit ... I forgot half of them!
 I will do my best to give thanks and credit to those who's code I +stole+ ... I mean used, but apologies in advance!
@@ -33,10 +32,15 @@ Whoa ... Already we have some messy /lisp/. But just for a short summary ... I a
 ** Dashboard
 I can't be posting my emacs setup on *r/unixporn* when I have a basic doom homepage .... That's why I added some stuff to remove most of the startup dashboard's info and instead put an image and the bare minimum amount of text\sidenote{I've edited the Vagabond picture to shrink down and fit my dashboard ... but any picture can likely work}
 #+begin_src emacs-lisp :tangle yes
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(add-hook! '+doom-dashboard-functions :append
-(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
-(setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
+;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+;;(add-hook! '+doom-dashboard-functions :append
+;;(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
+;;(setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 5)
+                        (registers . 5)))
 #+end_src
 
 ** Initial Visual Configuration
@@ -46,7 +50,7 @@ Now we are getting into the interesting stuff. Some plugins to set up how our fr
 (setq-default line-spacing 0.24)
 (modify-all-frames-parameters
 '((right-divider-width . 10)
- (internal-border-width . 10)))
+ (internal-border-width . 0)))
 (dolist (face '(window-divider
                window-divider-first-pixel
                 window-divider-last-pixel))
@@ -65,6 +69,9 @@ Now we are getting into the interesting stuff. Some plugins to set up how our fr
 ;;(after! centaur-tabs
 ;;  (setq centaur-tabs-set-bar 'right))
 #+end_src
+
+#+RESULTS:
+
 Additionally I am using the *Theme-Magic* plugin to make my *Vterm* match the rest of my Emacs Configuration
 #+begin_src emacs-lisp :tangle yes
 (use-package! theme-magic
@@ -104,28 +111,22 @@ Some stuff for ivy posframe
   scroll-preserve-screen-position 1)
 #+end_src
 ** Nano Stuff
+
 #+begin_src emacs-lisp :tangle yes
- (defun shaunsingh/apply-nano-theme (appearance)
-   "Load theme, taking current system APPEARANCE into consideration."
-   (mapc #'disable-theme custom-enabled-themes)
-   (pcase appearance
-     ('light (nano-light))
-     ('dark (nano-dark))))
+
  (use-package nano-theme
    :hook (after-init . nano-light)
    :config
    ;; If emacs has been built with system appearance detection
-;; add a hook to change the theme to match the system
-   (if (boundp 'ns-system-appearance-change-functions)
-       (add-hook 'ns-system-appearance-change-functions #'shaunsingh/apply-nano-theme))
+  ;; add a hook to change the theme to match the system
   ;; Now to add some missing faces
    (custom-set-faces
     `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
     `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
 
-    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
-    `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
-    `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
+;;    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
+ ;;   `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
+  ;;  `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
 
     `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
     `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
@@ -141,18 +142,21 @@ Some stuff for ivy posframe
     `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
     `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
     `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
-    ;;(use-package! nano-modeline
-     ;; :hook (after-init . nano-modeline-mode)
-      ;;:config
-      ;;(setq nano-modeline-prefix 'status
-       ;;     nano-modeline-prefix-padding 1
-        ;;    nano-modeline-position 'bottom))
+
+;;    (use-package! nano-modeline
+ ;;     :hook (after-init . nano-modeline-mode)
+  ;;    :config
+   ;;   (setq nano-modeline-prefix 'status
+    ;;        nano-modeline-prefix-padding 1
+     ;;       nano-modeline-position 'bottom))
+;;(require 'nano-modeline)
 
 (use-package! minions
   :hook (after-init . minions-mode))
 
-    (setq-default mode-line-format
+     (setq-default mode-line-format
                    (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
+
 #+end_src
 ** Initial Functional Configuration
 Here we have some stuff that pertains to how my Emacs *works* when I'm on it.\sidenote{I've just begun using xwidget ... but seems like a pretty cool tool!}
@@ -266,9 +270,11 @@ Who doesn't want to organize their life, files, and everything else in one place
 #+begin_src emacs-lisp :tangle yes
 ;; org-agenda-config
 (after! org-agenda
-  (setq org-agenda-files (list "~/org/agenda.org"
-                               "~/org/todo.org"))
-  (setq org-agenda-window-setup 'current-window
+ ;;  (setq org-agenda-files (list "~/org/agenda.org"
+;;                                "~/org/todo.org"))
+;; (setq org-agenda-files "~/org/todo.org")
+ (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
+ (setq org-agenda-window-setup 'current-window
         org-agenda-restore-windows-after-quit t
         org-agenda-show-all-dates nil
         org-agenda-time-in-grid t
@@ -297,6 +303,7 @@ Who doesn't want to organize their life, files, and everything else in one place
   (remove-hook 'org-agenda-finalize-hook
                '+org-defer-mode-in-agenda-buffers-h))
 #+end_src
+
 *** Org Agenda Visual Configuration
 #+begin_src emacs-lisp :tangle yes
 (after! org
@@ -375,6 +382,7 @@ I love Org Capture. It is probably my favourite part of Emacs ... I also have it
      :unnarrowed t))))
 
 #+end_src
+
 *** Org Capture Pt. 2
 I am running an org capture configuration that was created by the wonderful *Tecosaur* which uses the packages /doct/ to render the visuals instead. I have just recently begun tinkering with this so this will definitely be updated!\sidenote{I am still working on configuring this so it is somewhat bloated ... but it will be improved!}
 #+begin_src emacs-lisp :tangle yes
@@ -583,12 +591,56 @@ Since I am a MacOs user I have a configuration made (using the *Automation* tool
 ;;      (delete-frame)))
 
 #+end_src
+*** Org ToDo Sidebar
+#+begin_src emacs-lisp :tangle yes
+(defun isamert/toggle-side-bullet-org-buffer ()
+  "Toggle `bullet.org` in a side buffer for quick note taking.  The buffer is opened in side window so it can't be accidentaly removed."
+  (interactive)
+  (isamert/toggle-side-buffer-with-file "~/org/todo.org"))
+
+(defun isamert/buffer-visible-p (buffer)
+ "Check if given BUFFER is visible or not.  BUFFER is a string representing the buffer name."
+  (or (eq buffer (window-buffer (selected-window))) (get-buffer-window buffer)))
+
+(defun isamert/display-buffer-in-side-window (buffer)
+  "Just like `display-buffer-in-side-window' but only takes a BUFFER and rest of the parameters are for my taste."
+  (select-window
+   (display-buffer-in-side-window
+    buffer
+    (list (cons 'side 'right)
+          (cons 'slot 0)
+          (cons 'window-width 64)
+          (cons 'window-parameters (list (cons 'no-delete-other-windows t)
+                                         (cons 'no-other-window nil)))))))
+
+(defun isamert/remove-window-with-buffer (the-buffer-name)
+  "Remove window containing given THE-BUFFER-NAME."
+  (mapc (lambda (window)
+          (when (string-equal (buffer-name (window-buffer window)) the-buffer-name)
+            (delete-window window)))
+        (window-list (selected-frame))))
+
+(defun isamert/toggle-side-buffer-with-file (file-path)
+  "Toggle FILE-PATH in a side buffer. The buffer is opened in side window so it can't be accidentaly removed."
+  (interactive)
+  (let ((fname (file-name-nondirectory file-path)))
+  (if (isamert/buffer-visible-p fname)
+      (isamert/remove-window-with-buffer fname)
+    (isamert/display-buffer-in-side-window
+     (save-window-excursion
+       (find-file file-path)
+       (current-buffer))))))
+#+end_src
 ** ORG Visual Configuration
 *** Org Modern
 One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugin that helps hide and clean up Org buffers, the configuration is copied straight from the documentation and works wonderfully for me.\sidenote{This gives me those beautiful ToDo's and Done's}
 
 #+begin_src emacs-lisp :tangle yes
 ;; org modern
+;; Center the title and spread underline
+(setq org-document-title (list (cons 'center t) (cons 'overline " ")
+                        (cons 'underline nil) (cons 'box nil)))
+
 (setq ;; Edit settings
  org-auto-align-tags nil
  org-tags-column 0
@@ -612,6 +664,9 @@ One of the first *Org plugins* I have is *ORG MODERN* which is a wonderful plugi
  "⭠ now ─────────────────────────────────────────────────")
 (global-org-modern-mode)
 #+end_src
+
+#+RESULTS:
+: t
 
 *** SVG-Tag Mode
 This is a wonderful package created by the amazing *Rougier* (/check out his stuff if you like aesthetic Emacs/) which gives us beautifully rendered *Tags* inside of our org files\sidenote{it's made by Rougier ... it's going to look good}
@@ -806,7 +861,7 @@ I have my fonts fairly simply configured ... I am using *ETBembo* (wonderful fon
 ;;(set-face-attribute 'default nil :font "IBM 3270" :height 160 :weight normal)
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
 (set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
-(set-face-attribute 'variable-pitch nil :family "Ogg" :height 160)
+(set-face-attribute 'variable-pitch nil :family "Avenir" :height 160)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -978,4 +1033,11 @@ Not really part of the whole *ORG* section, but I often use it when I am working
                (split-window-horizontally (- (/ (window-width) 2))))))
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
+#+end_src
+
+** TODOIST
+#+begin_src emacs-lisp :tangle yes
+(require 'todoist)
+(setq todoist-token "2c719222699ff38063ceff191357d712fa24b7cb")
+(setq todoist-backing-buffer "~/org/todo.org")
 #+end_src

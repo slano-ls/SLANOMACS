@@ -5,6 +5,7 @@
 (package! org-roam)
 (package! org-roam-ui)
 (package! org-noter)
+(package! todoist)
 ;;(package! good-scroll)
 ;;(package! ox-hugo)
 (package! doct)
