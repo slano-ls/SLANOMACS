@@ -51,7 +51,7 @@ Now we are getting into the interesting stuff. Some plugins to set up how our fr
 (setq-default line-spacing 0.24)
 (modify-all-frames-parameters
 '((right-divider-width . 10)
- (internal-border-width . 0)))
+ (internal-border-width . 10)))
 (dolist (face '(window-divider
                window-divider-first-pixel
                 window-divider-last-pixel))
@@ -72,6 +72,7 @@ Now we are getting into the interesting stuff. Some plugins to set up how our fr
 #+end_src
 
 #+RESULTS:
+: t
 
 Additionally I am using the *Theme-Magic* plugin to make my *Vterm* match the rest of my Emacs Configuration
 #+begin_src emacs-lisp :tangle yes
@@ -1042,3 +1043,7 @@ Not really part of the whole *ORG* section, but I often use it when I am working
 (setq todoist-token "2c719222699ff38063ceff191357d712fa24b7cb")
 (setq todoist-backing-buffer "~/org/todo.org")
 #+end_src
+
+
+* Remaking my Emacs Configuration
+- This is the initial setup for a new/minimalized/revised edition of my DOOM Emacs configuration

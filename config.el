@@ -27,7 +27,7 @@
 (setq-default line-spacing 0.24)
 (modify-all-frames-parameters
 '((right-divider-width . 10)
- (internal-border-width . 0)))
+ (internal-border-width . 10)))
 (dolist (face '(window-divider
                window-divider-first-pixel
                 window-divider-last-pixel))
