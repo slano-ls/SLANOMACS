@@ -25,7 +25,7 @@
        ;;company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy +childframe)               ; a search engine for love and life
+       ivy               ; a search engine for love and life
        ;;vertico           ; the search engine of the future
 
        :ui
@@ -39,7 +39,7 @@
        ;;indent-guides     ; highlighted indent columns
        ligatures         ; ligatures and symbols to make your code pretty again
       ;; minimap           ; show a map of the code on the side
-       (modeline)          ; snazzy, Atom-inspired modeline, plus API
+       modeline          ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash         ; blink cursor line after big motions
        neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on

@@ -13,6 +13,7 @@
  '(git-gutter-fr:added ((t (:foreground "#FFAB91"))))
  '(git-gutter-fr:modified ((t (:foreground "#673AB7"))))
  '(git-gutter:modified ((t (:foreground "#673AB7"))))
+ '(ivy-posframe ((t nil)))
  '(lsp-ui-doc-background:modified ((t (:background "#FAFAFA"))))
  '(lsp-ui-doc-url:added ((t (:background "#FAFAFA"))))
  '(org-document-title ((t (:height 1.7 :underline t :inherit nano-salient))))
@@ -115,6 +116,7 @@
  '(global-wakatime-mode t t)
  '(mouse-wheel-progressive-speed nil)
  '(package-selected-packages
-   '(wakatime-mode olivetti subed ivy-posframe gpt org-center-headings))
+   '(nano-modeline wakatime-mode olivetti subed ivy-posframe gpt org-center-headings))
  '(wakatime-api-key "waka_b0c3c9b1-a895-4f1a-8706-f6ce7f52869e")
  '(wakatime-cli-path "~/.wakatime/wakatime-cli"))
+(put 'customize-face 'disabled nil)

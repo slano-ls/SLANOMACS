@@ -1,23 +1,24 @@
 ;;(add-to-list 'default-frame-alist '(undecorated . t))
 
-(setq user-full-name "Saihaj Law "
+(setq user-full-name "Saihaj Law"
       user-mail-address "laws0817@gmail.com")
 
 ;;(use-package :autothemer)
 (require 'nano-theme)
 ;;(require 'ef-themes)
-(setq doom-theme 'nano-light)
+(setq doom-theme 'doom-outrun-electric)
 (setq +zen-text-scale 0.9)
 ;;(setq display-line-numbers-type 'relative)
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 95))
 ;; (add-to-list 'default-frame-alist '(alpha 95 95))
- (require 'smooth-scroll)
+;;(require 'nano-modeline)
+(require 'smooth-scroll)
 
-;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-;;(add-hook! '+doom-dashboard-functions :append
-;;(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
-;;(setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+(add-hook! '+doom-dashboard-functions :append
+(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
+(setq fancy-splash-image (concat doom-user-dir "vagabond.png")))
 (setq dashboard-items '((recents  . 5)
                         (bookmarks . 5)
                         (projects . 5)
@@ -69,9 +70,12 @@
      (doom-blend 'base8 'functions 0.1)
      (face-attribute 'default :foreground))))
 
-(require 'ivy-posframe)
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-(ivy-posframe-mode 1)
+;; (require 'ivy-posframe)
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+;; (ivy-posframe-mode 1)
+;; (setq ivy-posframe-parameters
+;;       '((left-fringe . 0 )
+;;         (right-fringe. 0 )))
 (setq
   redisplay-dont-pause t
   scroll-margin 1
@@ -79,48 +83,49 @@
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-(use-package nano-theme
-   :hook (after-init . nano-light)
-   :config
-   ;; If emacs has been built with system appearance detection
-  ;; add a hook to change the theme to match the system
-  ;; Now to add some missing faces
-   (custom-set-faces
-    `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
-    `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
+;;  (use-package nano-theme
 
-;;    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
- ;;   `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
-  ;;  `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
+;;    :hook (after-init . nano-light)
+;;    :config
+;;    ;; If emacs has been built with system appearance detection
+;;   ;; add a hook to change the theme to match the system
+;;   ;; Now to add some missing faces
+;;    (custom-set-faces
+;;     `(flyspell-incorrect ((t (:underline (:color ,nano-light-salient :style line)))))
+;;     `(flyspell-duplicate ((t (:underline (:color ,nano-light-salient :style line)))))
 
-    `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
-    `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
+;; ;;    `(git-gutter:modified ((t (:foreground ,nano-light-salient))))
+;;  ;;   `(git-gutter-fr:added ((t (:foreground ,nano-light-popout))))
+;;   ;;  `(git-gutter-fr:modified ((t (:foreground ,nano-light-salient))))
 
-    `(vterm-color-red ((t (:foreground ,nano-light-critical))))
-    `(vterm-color-blue ((t (:foreground ,nano-light-salient))))
-    `(vterm-color-green ((t (:foreground ,nano-light-popout))))
-    `(vterm-color-yellow ((t (:foreground ,nano-light-popout))))
-    `(vterm-color-magenta ((t (:foreground ,nano-light-salient))))
-    `(scroll-bar ((t (:background ,nano-light-background))))
-    `(child-frame-border ((t (:foreground ,nano-light-faded))))
+;;     `(lsp-ui-doc-url:added ((t (:background ,nano-light-highlight))))
+;;     `(lsp-ui-doc-background:modified ((t (:background ,nano-light-highlight))))
 
-    `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
-    `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
-    `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
+;;     `(vterm-color-red ((t (:foreground ,nano-light-critical))))
+;;     `(vterm-color-blue ((t (:foreground ,nano-light-salient))))
+;;     `(vterm-color-green ((t (:foreground ,nano-light-popout))))
+;;     `(vterm-color-yellow ((t (:foreground ,nano-light-popout))))
+;;     `(vterm-color-magenta ((t (:foreground ,nano-light-salient))))
+;;     `(scroll-bar ((t (:background ,nano-light-background))))
+;;     `(child-frame-border ((t (:foreground ,nano-light-faded))))
 
-;;    (use-package! nano-modeline
- ;;     :hook (after-init . nano-modeline-mode)
-  ;;    :config
+;;     `(avy-lead-face-1 ((t (:foreground ,nano-light-subtle))))
+;;     `(avy-lead-face ((t (:foreground ,nano-light-popout :weight bold))))
+;;     `(avy-lead-face-0 ((t (:foreground ,nano-light-salient :weight bold))))))
+
+    ;;(use-package! nano-modeline
+     ;; :hook (after-init . nano-modeline-mode)
+    ;; :config
    ;;   (setq nano-modeline-prefix 'status
-    ;;        nano-modeline-prefix-padding 1
-     ;;       nano-modeline-position 'bottom))
+  ;;          nano-modeline-prefix-padding 1
+ ;;         nano-modeline-position 'bottom))
 ;;(require 'nano-modeline)
 
-(use-package! minions
-  :hook (after-init . minions-mode))
+;;(use-package! minions
+ ;; :hook (after-init . minions-mode))
 
-     (setq-default mode-line-format
-                   (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
+  ;;   (setq-default mode-line-format
+   ;;                (cons (propertize "\u200b" 'display '((raise -0.35) (height 1.4))) mode-line-format))
 
 (setq scroll-margin 2
       auto-save-default t
@@ -185,8 +190,8 @@
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
 
-;;(setq doom-modeline-enable-word-count t)
-;;(setq doom-modeline-modal t)
+(setq doom-modeline-enable-word-count t)
+(setq doom-modeline-modal t)
 
 ;;(use-package subed
  ;; :ensure t
@@ -287,25 +292,25 @@
 
 (after! org-roam
     (setq org-roam-capture-templates
-        `(("F" "French" plain "%?"
+        `(("E" "English" plain "%?"
      :if-new
      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-      "${title}\n#+filetags:French\n#+LATEX_CLASS:tufte-book\n\n ")
+      "${title}\n#+filetags:English\n#+LATEX_CLASS:tufte-book\n\n ")
      :unnarrowed t)
-        ("D" "Data Management" plain "%?"
+        ("C" "Calculus" plain "%?"
      :if-new
      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-      "${title}\n#+filetags:Data_Management \n#+LATEX_CLASS:tufte-book\n\n ")
+      "${title}\n#+filetags:Calculus \n#+LATEX_CLASS:tufte-book\n\n ")
      :unnarrowed t)
-        ("C" "Computer Engineering" plain "%?"
+        ("B" "Biology" plain "%?"
      :if-new
      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-      "${title}\n#+filetags:Computer_Engineering\n#+LATEX_CLASS:tufte-book \n\n ")
+      "${title}\n#+filetags:Biology\n#+LATEX_CLASS:tufte-book \n\n ")
      :unnarrowed t)
-        ("B" "Biology " plain "%?"
+        ("M" "Misc" plain "%?"
      :if-new
      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-      "${title}\n#+filetags:Biology\n#+LATEX_CLASS:tufte-book\n\n ")
+      "${title}\n#+filetags:Misc\n#+LATEX_CLASS:tufte-book\n\n ")
      :unnarrowed t))))
 
 (when (display-graphic-p)
@@ -751,7 +756,6 @@
      `(org-level-1 ((t (:height 1.45 :inherit nano-salient))))
      `(org-document-title ((t (:height 1.7 :underline t :inherit nano-salient)))))
 
-;;(set-face-attribute 'default nil :font "IBM 3270" :height 160 :weight normal)
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12))
 (set-face-attribute 'fixed-pitch nil :family "IBM 3270" :height 160)
 (set-face-attribute 'variable-pitch nil :family "Avenir" :height 160)
@@ -780,8 +784,6 @@
             (font-lock-add-keywords
              nil
              '(("^-\\{5,\\}"  0 '(:foreground "purple" :weight bold))))))
-
-(require 'ink)
 
 ;; (with-eval-after-load 'ox
 ;;   (require 'ox-hugo))
@@ -853,13 +855,7 @@
 (use-package! org-noter
   :after (:any org pdf-view)
   :config
-  (setq
-   ;; The WM can handle splits
-   ;;org-noter-notes-window-location 'other-frame
-   ;; Please stop opening frames
-   ;;org-noter-always-create-frame nil
-   ;; I want to see the whole file
-   org-noter-hide-other nil
+  (setq org-noter-hide-other nil
    )
   )
 
@@ -906,7 +902,3 @@
                (split-window-horizontally (- (/ (window-width) 2))))))
       (switch-to-buffer "*Calculator*")
       (select-window main-window))))
-
-(require 'todoist)
-(setq todoist-token "2c719222699ff38063ceff191357d712fa24b7cb")
-(setq todoist-backing-buffer "~/org/todo.org")
